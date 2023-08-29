@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Form, Field, Formik } from "formik";
 import {
   Button,
@@ -94,7 +93,7 @@ export const ResetPassword = () => (
               </Text>
             )}
           </FormControl>
-          <Button type="submit" w="full">
+          <Button bg={'dark'} color={'white'} _hover={{ bg: "teal.400" }} type="submit" w="full">
             Submit
           </Button>
         </VStack>

@@ -3,11 +3,9 @@ import {
   Heading,
   Stack,
   Text,
-  Button,
   Box,
 } from '@chakra-ui/react'
-import { NavLink } from 'react-router-dom'
-import { Navbar } from '../../../App/routes/auth/Navbar'
+import { Navbar } from '../../../app/routes/auth/components/Navbar'
 
 export const LandingPage = () => {
   return (

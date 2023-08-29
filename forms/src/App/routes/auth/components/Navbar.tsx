@@ -5,11 +5,14 @@ import {
   Stack,
   useColorModeValue,
 } from '@chakra-ui/react'
-import { Logo } from '../../../shared/components/logo/Logo'
-import { ThemeSwitcher } from '../../../shared/components/theme-switcher/ThemeSwitcher'
-import { Link, NavLink } from 'react-router-dom'
+import { Logo } from '../../../../shared/components/logo/Logo'
+import { ThemeSwitcher } from '../../../../shared/components/theme-switcher/ThemeSwitcher'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 
 export const Navbar = () => {
+  const location = useLocation()
+  console.log(location.pathname);
+  
   return (
     <Box>
       <Flex
@@ -30,18 +33,18 @@ export const Navbar = () => {
           </Flex>
         </Flex>
         <Stack
-          flex={{ base: 1, md: 0 }}
+          flex={{ base: 1, md: 1 }}
           justify={'flex-end'}
           direction={'row'}
           spacing={6}>
           <ThemeSwitcher></ThemeSwitcher>
-          <Button as={NavLink} to="/auth/login" fontSize={'sm'} fontWeight={400} variant={'link'} >
+          {location.pathname != '/auth/login' && <Button as={NavLink} to="/auth/login" fontSize={'sm'} fontWeight={400} variant={'link'} >
             Login
-          </Button>
-          <Button
+          </Button>}
+          {location.pathname != '/auth/register' && <Button
             as={NavLink} 
             to="/auth/register"
-            display={{ base: 'none', md: 'inline-flex' }}
+            display={{ base: 'inline-flex', md: 'inline-flex' }}
             fontSize={'sm'}
             fontWeight={600}
             color={'white'}
@@ -50,7 +53,7 @@ export const Navbar = () => {
               bg: 'green.500',
             }}>
             Register
-          </Button>
+          </Button>}
         </Stack>
       </Flex>
 

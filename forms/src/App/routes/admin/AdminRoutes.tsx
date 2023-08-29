@@ -14,7 +14,7 @@ export const AdminRoutes = [
       let { Form } = await import("./pages/form/Form");
       return { Component: Form };
     },
-  },
+  },  
   {
     path: "*",
     index: true,
