@@ -15,7 +15,9 @@ import {
   MenuItem,
   VStack,
   IconButton,
+  Icon,
 } from "@chakra-ui/react";
+import { EditIcon } from "@chakra-ui/icons";
 import { Logo } from "../../../../shared/components/logo/Logo";
 import { ThemeSwitcher } from "../../../../shared/components/theme-switcher/ThemeSwitcher";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
@@ -79,50 +81,64 @@ export const Navbar = () => {
           spacing={6}
         >
           <Menu isLazy>
-            <MenuButton as={Button} colorScheme="teal" variant="ghost">
-              <Wrap>
-                <WrapItem>
-                  <Avatar size="sm" src={admin.profileURL} />
-                </WrapItem>
-              </Wrap>
-            </MenuButton>
-            <MenuList>
-              <MenuItem
-                closeOnSelect={false}
-                display="flex"
-                justifyContent="center"
-              >
-                <VStack paddingY="20px" spacing="5">
-                  <Avatar size="lg" src={admin.profileURL} />
-                  <Button
-                    as={NavLink}
-                    to="/admin/edit-profile"
-                    colorScheme="teal"
-                    variant="ghost"
-                    size="sm"
-                  >
-                    Manage Profile
-                  </Button>
-                </VStack>
-              </MenuItem>
-              <MenuItem
-                closeOnSelect={false}
-                display="flex"
-                justifyContent="space-between"
-              >
-                <Text>Select Theme</Text> <ThemeSwitcher />
-              </MenuItem>
-              <MenuItem onClick={handleLogout} display="flex" justifyContent="space-between">
-                <Text>Logout</Text>
-                <IconButton
-                  aria-label='logout'
-                  as={MdExitToApp}
-                  boxSize={6}
-                  variant="ghost"
-                  marginLeft="2"
-                />
-              </MenuItem>
-            </MenuList>
+            {({ onClose }) => {
+              return (
+                <>
+                  <MenuButton as={Button} colorScheme="teal" variant="ghost">
+                    <Wrap>
+                      <WrapItem>
+                        <Avatar size="sm" src={admin.profileURL} />
+                      </WrapItem>
+                    </Wrap>
+                  </MenuButton>
+                  <MenuList>
+                    <MenuItem
+                      closeOnSelect={false}
+                      display="flex"
+                      justifyContent="center"
+                    >
+                      <VStack paddingY="20px" spacing="5">
+                        <Avatar size="lg" src={admin.profileURL} />
+                        <Button
+                          as={NavLink}
+                          to="/admin/edit-profile"
+                          colorScheme="teal"
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => {
+                            onClose();
+                          }}
+                        >
+                          <EditIcon />
+                          <Text px="5px">Manage Profile</Text>
+                        </Button>
+                      </VStack>
+                    </MenuItem>
+                    <MenuItem
+                      closeOnSelect={false}
+                      display="flex"
+                      justifyContent="space-between"
+                    >
+                      <Text>Select Theme</Text> <ThemeSwitcher />
+                    </MenuItem>
+                    <MenuItem
+                      onClick={handleLogout}
+                      display="flex"
+                      justifyContent="space-between"
+                    >
+                      <Text>Logout</Text>
+                      <IconButton
+                        aria-label="logout"
+                        as={MdExitToApp}
+                        boxSize={6}
+                        variant="ghost"
+                        marginLeft="2"
+                      />
+                    </MenuItem>
+                  </MenuList>
+                </>
+              );
+            }}
           </Menu>
         </Stack>
       </Flex>
