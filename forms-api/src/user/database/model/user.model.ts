@@ -18,8 +18,7 @@ export class User extends Document {
   @Prop({ maxlength: 50 })
   name: string;
 
-  @Prop()
-  profileURL: string;
-
+  @Prop({ default: '' })
+  profile: string;
 }
 export const UserSchema = SchemaFactory.createForClass(User);

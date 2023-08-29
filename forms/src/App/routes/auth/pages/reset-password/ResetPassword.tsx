@@ -15,7 +15,7 @@ const ResetPasswordSchema = Yup.object().shape({
     .max(25, "Should not exceed 25 characters!")
     .required("Username is required!"),
   password: Yup.string()
-    .max(50, "TShould not exceed 50 characters!")
+    .max(50, "Should not exceed 50 characters!")
     .required("Password is required!"),
   confirmPassword: Yup.string().oneOf(
     [Yup.ref("password"), undefined],

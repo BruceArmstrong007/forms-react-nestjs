@@ -14,21 +14,20 @@ import {
   MenuList,
   MenuItem,
   VStack,
-  IconButton,
   Icon,
 } from "@chakra-ui/react";
 import { EditIcon } from "@chakra-ui/icons";
 import { Logo } from "../../../../shared/components/logo/Logo";
 import { ThemeSwitcher } from "../../../../shared/components/theme-switcher/ThemeSwitcher";
-import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { MdExitToApp } from "react-icons/md";
 import { adminState } from "../../../state/admin-state";
 import { authState } from "../../../state/auth-state";
 
 export const Navbar = () => {
-  const location = useLocation();
   const navigate = useNavigate();
   const admin = adminState((state: any) => state);
+  
   const auth: any = authState((state: any) => state);
 
   const handleLogout = () => {
@@ -74,12 +73,8 @@ export const Navbar = () => {
           </HStack>
           <Flex display={{ base: "none", md: "flex" }} ml={10}></Flex>
         </Flex>
-        <Stack
-          flex={{ base: 1, md: 1 }}
-          justify={"flex-end"}
-          direction={"row"}
-          spacing={6}
-        >
+        <Stack flex={{ base: 1, md: 1 }} justify={"flex-end"} direction={"row"}>
+          <ThemeSwitcher />
           <Menu isLazy>
             {({ onClose }) => {
               return (
@@ -87,7 +82,7 @@ export const Navbar = () => {
                   <MenuButton as={Button} colorScheme="teal" variant="ghost">
                     <Wrap>
                       <WrapItem>
-                        <Avatar size="sm" src={admin.profileURL} />
+                        <Avatar size="sm" src={admin.profile} />
                       </WrapItem>
                     </Wrap>
                   </MenuButton>
@@ -98,7 +93,11 @@ export const Navbar = () => {
                       justifyContent="center"
                     >
                       <VStack paddingY="20px" spacing="5">
-                        <Avatar size="lg" src={admin.profileURL} />
+                        <Avatar size="lg" src={admin.profile} />
+                        <VStack>
+                          <Text fontSize="sm">{admin.username}</Text>
+                          <Text fontSize="xs">{admin.name}</Text>
+                        </VStack>
                         <Button
                           as={NavLink}
                           to="/admin/edit-profile"
@@ -115,23 +114,15 @@ export const Navbar = () => {
                       </VStack>
                     </MenuItem>
                     <MenuItem
-                      closeOnSelect={false}
-                      display="flex"
-                      justifyContent="space-between"
-                    >
-                      <Text>Select Theme</Text> <ThemeSwitcher />
-                    </MenuItem>
-                    <MenuItem
                       onClick={handleLogout}
                       display="flex"
                       justifyContent="space-between"
                     >
                       <Text>Logout</Text>
-                      <IconButton
+                      <Icon
                         aria-label="logout"
                         as={MdExitToApp}
                         boxSize={6}
-                        variant="ghost"
                         marginLeft="2"
                       />
                     </MenuItem>

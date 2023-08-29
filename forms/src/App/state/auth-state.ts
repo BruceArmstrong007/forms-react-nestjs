@@ -1,7 +1,7 @@
 import { create } from "zustand";
+import { devtools } from "zustand/middleware";
 import { produce } from "immer";
-import { login, logout, refresh } from "../api/auth-request";
-import { register } from "../../serviceWorker";
+import { login, logout, refresh, register  } from "../api/auth-request";
 
 export const authState = create((set) => ({
   token: {

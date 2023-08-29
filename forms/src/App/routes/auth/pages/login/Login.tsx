@@ -33,7 +33,7 @@ export const Login = () => {
       return;
     }
     alertSuccess("Success!","Successfully logged in.");
-    navigate('/admin');
+    navigate('/admin/dashboard');
   }
   return (
     <Formik

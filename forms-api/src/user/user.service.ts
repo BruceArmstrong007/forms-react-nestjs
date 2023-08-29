@@ -57,8 +57,12 @@ export class UserService {
     return await this.userRepository.userProfile(username);
   }
 
-  async updateUser(username: string, fields: UpdateUserRequest) {
-    await this.userRepository.updateUser(username, fields);
+  async updateUser(username: string, fields: UpdateUserRequest, file?: string) {
+    const result = await {
+      ...fields,
+      profile: file,
+    };
+    await this.userRepository.updateUser(username, result);
     return {
       message: 'User Details Updated.',
     };

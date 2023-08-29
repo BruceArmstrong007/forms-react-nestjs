@@ -34,8 +34,4 @@ export class UpdateUserRequest {
   @MinLength(1)
   @MaxLength(50)
   name?: string;
-
-  @IsOptional()
-  @IsString()
-  profileURL?: string;
 }

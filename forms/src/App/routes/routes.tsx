@@ -3,14 +3,13 @@ import { AuthRoutes } from "./auth/AuthRoutes";
 import { AdminRoutes } from "./admin/AdminRoutes";
 import { UserRoutes } from "./user/UserRoutes";
 import { ErrorPage } from "../../shared/components/error-page/ErrorPage";
-import { Admin } from "./admin/Admin";
 import { authState } from "../state/auth-state";
 import { adminState } from "../state/admin-state";
 
 export const router = createBrowserRouter([
   {
     path: "",
-    loader: async () => {
+  loader: async () => {
       const auth: any = authState.getState();
       if (!auth.token.refreshToken) return true;
       const response: any = await auth.refresh();
@@ -32,9 +31,9 @@ export const router = createBrowserRouter([
           const auth: any = await authState.getState();
           const token = auth.token.accessToken;
           if (token) throw new Error("Authorized");
-          return true;
+          else return token;
         },
-        errorElement: <Navigate to="/admin" />,
+        errorElement: <Navigate to="/admin/dashboard" />,
         async lazy() {
           let { Auth } = await import("./auth/Auth");
           return { Component: Auth };
@@ -44,15 +43,17 @@ export const router = createBrowserRouter([
       {
         path: "admin",
         loader: async () => {
-          await new Promise((resolve) => setTimeout(resolve, 100));
+          await new Promise((resolve) => setTimeout(resolve, 200));
           let auth: any = await authState.getState();
           let token = auth.token.accessToken;
           if (!token) throw new Error("UnAuthorized");
-          let admin: any = await adminState.getState();
-          return await admin.profile();
+          else return token;
         },
-        errorElement: <Navigate to="/auth" />,
-        element: <Admin />,
+        errorElement: <Navigate to="/auth/login" />,
+        async lazy() {
+          let { Admin } = await import("./admin/Admin");
+          return { Component: Admin };
+        },
         children: AdminRoutes,
       },
       {

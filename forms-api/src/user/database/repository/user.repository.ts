@@ -35,7 +35,7 @@ export class UserRepository {
     username: string,
     updates: Partial<User>,
   ): Promise<User | null> {
-    return this.userModel
+    return await this.userModel
       .findOneAndUpdate({ username: username }, updates, { new: true })
       .exec();
   }
