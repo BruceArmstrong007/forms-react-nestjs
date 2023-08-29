@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import { Box, Grid, HStack, VStack } from "@chakra-ui/react";
 import { Navbar } from "./components/Navbar";
 import { alertState } from "../../state/alert-state";
-import { AuthAlert } from "../../../shared/components/alert/AuthAlert";
+import { AlertPopup } from "../../../shared/components/alert/AlertPopup";
 export const Admin = () => {
   const alert = alertState((state: any) => state.alert);
   return (
@@ -10,7 +10,7 @@ export const Admin = () => {
       <Navbar />
       <Outlet />
 
-      {alert.type && <AuthAlert props={alert} />}
+      {alert.type && <AlertPopup props={alert} />}
     </Box>
   );
 };

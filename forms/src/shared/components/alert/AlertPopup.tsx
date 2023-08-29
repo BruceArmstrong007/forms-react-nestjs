@@ -6,7 +6,7 @@ import {
 } from "@chakra-ui/alert";
 import { Box } from "@chakra-ui/layout";
 
-export const AuthAlert = (alert: any) => {
+export const AlertPopup = (alert: any) => {
 
   return (
     <Box w="full" padding="20px" position="absolute" bottom="0">
