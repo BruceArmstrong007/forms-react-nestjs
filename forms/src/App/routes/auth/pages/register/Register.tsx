@@ -9,9 +9,9 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import * as Yup from "yup";
-import { authState } from "../../../../state/AuthState";
 import { useNavigate } from "react-router";
-import { alertState } from "../../../../state/AlertState";
+import { alertState } from "../../../../state/alert-state";
+import { authState } from "../../../../state/auth-state";
 
 const RegisterSchema = Yup.object().shape({
   username: Yup.string()

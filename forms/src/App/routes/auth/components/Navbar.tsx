@@ -11,7 +11,6 @@ import { Link, NavLink, useLocation } from 'react-router-dom'
 
 export const Navbar = () => {
   const location = useLocation()
-  console.log(location.pathname);
   
   return (
     <Box>

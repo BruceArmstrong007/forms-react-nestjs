@@ -7,7 +7,6 @@ import {
 import { Box } from "@chakra-ui/layout";
 
 export const AuthAlert = (alert: any) => {
-  console.log(alert);
 
   return (
     <Box w="full" padding="20px" position="absolute" bottom="0">

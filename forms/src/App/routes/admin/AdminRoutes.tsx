@@ -9,7 +9,14 @@ export const AdminRoutes = [
     },
   },
   {
-    path: "form",
+    path: "forms",
+    async lazy() {
+      let { Form } = await import("./pages/form/Form");
+      return { Component: Form };
+    },
+  },
+  {
+    path: "edit-profile",
     async lazy() {
       let { Form } = await import("./pages/form/Form");
       return { Component: Form };

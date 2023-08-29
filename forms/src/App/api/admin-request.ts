@@ -1,16 +1,15 @@
-import { SERVER_URL } from "../../environment";
-import { authState } from '../../state/AuthState';
+import { SERVER_URL } from "../environment";
+import { authState } from "../state/auth-state";
 
 const serverURL = SERVER_URL? SERVER_URL : '';
 
-export const profile = async () => {
-    const endPoint = '/user/profile';
+export async function profile() {
     const auth: any = authState.getState();
-    console.log(auth);
-    
+    const token = auth.token.accessToken;
+    const endPoint = '/user/profile'
     const requestOptions = {
         method: 'GET',
-        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ auth.auth.accessToken},
+        headers: { 'Content-Type': 'application/json', 'Authorization' : 'Bearer '+ token },
     };
     let result = null;
     try{

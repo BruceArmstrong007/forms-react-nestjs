@@ -1,7 +1,7 @@
 import { Box, Grid, VStack } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 import { Navbar } from "./components/Navbar";
-import { alertState } from "../../state/AlertState";
+import { alertState } from "../../state/alert-state";
 import { AuthAlert } from "../../../shared/components/alert/AuthAlert";
 export const Auth = () => {
   const alert = alertState((state: any) => state.alert);

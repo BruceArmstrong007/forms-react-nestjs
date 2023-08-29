@@ -1,30 +1,31 @@
 import { create } from "zustand";
 import { produce } from "immer";
-import { LoginRequest, LogoutRequest, RefreshTokenRequest, RegisterRequest } from "../routes/auth/AuthRequests";
+import { login, logout, refresh } from "../api/auth-request";
+import { register } from "../../serviceWorker";
 
 export const authState = create((set) => ({
-  auth: {
+  token: {
     accessToken: null,
     refreshToken: localStorage.getItem("refreshToken"),
   },
   logout: async () =>{
-    const response = await LogoutRequest();
+    const response = await logout();
     set(
       produce((state: any) => {
-        state.auth.accessToken = null;
-        state.auth.refreshToken = null;
+        state.token.accessToken = null;
+        state.token.refreshToken = null;
         localStorage.removeItem("refreshToken");
       })
     )
     return response
   },
   login: async (values: any) => {
-    const response = await LoginRequest(values);
+    const response = await login(values);
     if (response && !response?.statusCode) {
       set(
         produce((state: any) => {
-          state.auth.accessToken = response?.accessToken;
-          state.auth.refreshToken = response?.refreshToken;
+          state.token.accessToken = response?.accessToken;
+          state.token.refreshToken = response?.refreshToken;
         })
       );
       localStorage.setItem("refreshToken", response?.refreshToken);
@@ -32,14 +33,14 @@ export const authState = create((set) => ({
     return response;
   },
   register: async (values: any) => {
-    return await RegisterRequest(values);
+    return await register(values);
   },
   refresh: async () => {
-    const response = await RefreshTokenRequest();
+    const response = await refresh();
     if(response && !response?.statusCode){
       set(
         produce((state: any) => {
-          state.auth.accessToken = response?.accessToken;
+          state.token.accessToken = response?.accessToken;
         })
       );
     }
