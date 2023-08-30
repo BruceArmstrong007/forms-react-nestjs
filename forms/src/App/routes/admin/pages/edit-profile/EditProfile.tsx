@@ -38,11 +38,13 @@ export const EditProfile = () => {
     setFile(file);
     const result = new FormData();
     result.append("profile", file);
-    console.log(result);
-
-    admin.profileUpload(result).then((res: any) => {
-      if(res.statusCode) return;
-      admin.profile();
+    admin.uploadProfile(result).then((res: any) => {
+      if (res?.statusCode) {
+        alertError("Error!", res?.message);
+        return;
+      }
+      admin.getProfile();
+      alertSuccess("Success!", "Successfully Updated.");
     });
   };
   const removeFile = () => {
