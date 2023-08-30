@@ -7,12 +7,11 @@ import {
   Input,
   Text,
   VStack,
+  useToast,
 } from "@chakra-ui/react";
 import * as Yup from "yup";
 import { useNavigate } from "react-router";
-import { alertState } from "../../../../state/alert-state";
 import { authState } from "../../../../state/auth-state";
-
 const RegisterSchema = Yup.object().shape({
   username: Yup.string()
     .max(25, "Should not exceed 25 characters!")
@@ -28,15 +27,22 @@ const RegisterSchema = Yup.object().shape({
 
 export const Register = () => {
   const navigate = useNavigate();
+  const toast = useToast();
   const register = authState((state: any) => state.register);
-  const alertSuccess = alertState((state: any) => state.success);
-  const alertError = alertState((state: any) => state.error);
   const handleResponse = (res: any) => {
     if (res?.statusCode) {
-      alertError("Error!", res?.message);
+      toast({
+        title: "API Error",
+        description: res?.message,
+        status: "error",
+      });
       return;
     }
-    alertSuccess("Success!", "Successfully Registered.");
+    toast({
+      title: "Success!",
+      description: "Successfully Registered.",
+      status: "success",
+    });
     navigate("/auth/login");
   };
   return (

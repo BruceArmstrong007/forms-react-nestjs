@@ -7,9 +7,9 @@ import {
   Input,
   Text,
   VStack,
+  useToast,
 } from "@chakra-ui/react";
 import * as Yup from "yup";
-import { alertState } from "../../../../state/alert-state";
 import { useNavigate } from "react-router";
 import { authState } from "../../../../state/auth-state";
 
@@ -24,17 +24,24 @@ const LoginSchema = Yup.object().shape({
 
 export const Login = () => {
   const navigate = useNavigate();
-  const login = authState((state: any) => state.login);  
-  const alertSuccess = alertState((state: any) => state.success);
-  const alertError = alertState((state: any) => state.error);
+  const toast = useToast();
+  const login = authState((state: any) => state.login);
   const handleResponse = (res: any) => {
-    if(res?.statusCode) {
-      alertError("Error!",res?.message);
+    if (res?.statusCode) {
+      toast({
+        title: "API Error",
+        description: res?.message,
+        status: "error",
+      });
       return;
     }
-    alertSuccess("Success!","Successfully logged in.");
-    navigate('/admin/dashboard');
-  }
+    toast({
+      title: "Success!",
+      description: "Successfully logged in.",
+      status: "success",
+    });
+    navigate("/admin/dashboard");
+  };
   return (
     <Formik
       initialValues={{
@@ -42,7 +49,9 @@ export const Login = () => {
         password: "",
       }}
       validationSchema={LoginSchema}
-      onSubmit={(values) => {login(values).then(handleResponse)}}
+      onSubmit={(values) => {
+        login(values).then(handleResponse);
+      }}
     >
       {({ handleSubmit, errors, touched }) => (
         <Form onSubmit={handleSubmit}>

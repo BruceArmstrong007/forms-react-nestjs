@@ -1,10 +1,7 @@
 import { Box, Grid, VStack } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 import { Navbar } from "./components/Navbar";
-import { alertState } from "../../state/alert-state";
-import { AlertPopup } from "../../../shared/components/alert/AlertPopup";
 export const Auth = () => {
-  const alert = alertState((state: any) => state.alert);
   return (
     <Box w="full" h="100vh">
       <Navbar />
@@ -26,8 +23,6 @@ export const Auth = () => {
           <Outlet />
         </Grid>
       </VStack>
-
-      {alert.type && <AlertPopup props={alert} />}
     </Box>
   );
 };

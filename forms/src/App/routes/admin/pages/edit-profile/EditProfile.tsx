@@ -1,8 +1,7 @@
 import { adminState } from "../../../../state/admin-state";
 import { VStack, Grid, Box, Heading, Text } from "@chakra-ui/layout";
-import { FormHelperText, Icon } from "@chakra-ui/react";
+import { FormHelperText, Icon, useToast } from "@chakra-ui/react";
 import * as Yup from "yup";
-import { alertState } from "../../../../state/alert-state";
 import { Form } from "react-router-dom";
 import { Field, Formik } from "formik";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
@@ -30,8 +29,7 @@ const ProfileSchema = Yup.object().shape({
 export const EditProfile = () => {
   const [file, setFile] = useState<any>({ name: "" });
   const admin: any = adminState((state: any) => state);
-  const alertSuccess = alertState((state: any) => state.success);
-  const alertError = alertState((state: any) => state.error);
+  const toast = useToast();
   const inputRef: any = useRef();
   const fileRef: any = useRef();
   const addFile = (file: any) => {
@@ -40,11 +38,19 @@ export const EditProfile = () => {
     result.append("profile", file);
     admin.uploadProfile(result).then((res: any) => {
       if (res?.statusCode) {
-        alertError("Error!", res?.message);
+        toast({
+          title: "API Error",
+          description: res?.message,
+          status: "error",
+        });
         return;
       }
       admin.getProfile();
-      alertSuccess("Success!", "Successfully Updated.");
+      toast({
+        title: "Success!",
+        description: "Profile Picture successfully uploaded.",
+        status: "success",
+      });
     });
   };
   const removeFile = () => {
@@ -56,10 +62,18 @@ export const EditProfile = () => {
   };
   const handleResponse = (res: any) => {
     if (res?.statusCode) {
-      alertError("Error!", res?.message);
+      toast({
+        title: "API Error",
+        description: res?.message,
+        status: "error",
+      });
       return;
     }
-    alertSuccess("Success!", "Successfully Updated.");
+    toast({
+      title: "Success!",
+      description: "Profile successfully updated.",
+      status: "success",
+    });
   };
   return (
     <Box w="full">
@@ -159,8 +173,8 @@ export const EditProfile = () => {
                         )}
                       </InputGroup>
                       <FormHelperText>
-                          Upload a image within 5MB (Supported Format: JPEG)
-                        </FormHelperText>
+                        Upload a image within 5MB (Supported Format: JPEG)
+                      </FormHelperText>
                     </FormControl>
                     <Button
                       bg={"dark"}
