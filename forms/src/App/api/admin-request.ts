@@ -46,3 +46,25 @@ export async function update(values: any) {
   }
   return result;
 }
+
+export async function uploadProfile(values: any) {
+  const auth: any = authState.getState();
+  const token = auth.token.accessToken;
+  const endPoint = "/user/upload-profile";
+  const requestOptions = {
+    method: "PUT",
+    headers: {
+      "Authorization": "Bearer " + token,
+    },
+    body: values
+  };
+  let result = null;
+  try {
+    result = await fetch(serverURL + endPoint, requestOptions);
+    result = await result.json();
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+  return result;
+}

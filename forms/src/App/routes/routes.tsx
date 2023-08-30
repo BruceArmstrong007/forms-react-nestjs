@@ -27,7 +27,6 @@ export const router = createBrowserRouter([
       {
         path: "auth",
         loader: async () => {
-          await new Promise((resolve) => setTimeout(resolve, 100));
           const auth: any = await authState.getState();
           const token = auth.token.accessToken;
           if (token) throw new Error("Authorized");
@@ -43,11 +42,11 @@ export const router = createBrowserRouter([
       {
         path: "admin",
         loader: async () => {
-          await new Promise((resolve) => setTimeout(resolve, 200));
+          let admin: any = adminState.getState();
           let auth: any = await authState.getState();
           let token = auth.token.accessToken;
           if (!token) throw new Error("UnAuthorized");
-          else return token;
+          else return await admin.getProfile();
         },
         errorElement: <Navigate to="/auth/login" />,
         async lazy() {

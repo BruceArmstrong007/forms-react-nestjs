@@ -53,25 +53,38 @@ export class UserService {
     return null;
   }
 
-  async profile(username: string) {
+  async profile(username: string): Promise<User | null> {
     return await this.userRepository.userProfile(username);
   }
 
-  async updateUser(username: string, fields: UpdateUserRequest, file?: string) {
-    const result = await {
-      ...fields,
-      profile: file,
-    };
-    await this.userRepository.updateUser(username, result);
+  async updateUser(
+    username: string,
+    fields: UpdateUserRequest,
+  ): Promise<object> {
+    await this.userRepository.updateUser(username, fields);
     return {
       message: 'User Details Updated.',
     };
   }
 
-  async deleteUser(username: string) {
+  async deleteUser(username: string): Promise<object> {
     await this.userRepository.deleteUser(username);
     return {
       message: 'User Deleted.',
     };
+  }
+
+  async profileUpload(
+    username: string,
+    file: Express.Multer.File,
+  ): Promise<object> {
+    try {
+      const fileName = 'username.' + file?.originalname.split('.')[1];
+      const link = await this.userRepository.uploadFile(fileName, file);
+      await this.userRepository.updateUser(username, { profile: link });
+      return { message: 'Operation Successful' };
+    } catch (error: any) {
+      return { message: error.message, statusCode: error.statusCode };
+    }
   }
 }

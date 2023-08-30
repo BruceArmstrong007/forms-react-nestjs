@@ -1,6 +1,6 @@
 import { adminState } from "../../../../state/admin-state";
 import { VStack, Grid, Box, Heading, Text } from "@chakra-ui/layout";
-import { Icon } from "@chakra-ui/react";
+import { FormHelperText, Icon } from "@chakra-ui/react";
 import * as Yup from "yup";
 import { alertState } from "../../../../state/alert-state";
 import { Form } from "react-router-dom";
@@ -28,27 +28,30 @@ const ProfileSchema = Yup.object().shape({
 });
 
 export const EditProfile = () => {
-  const [file, setFile] = useState<any>({name: ''});
-  const admin = adminState((state: any) => state);
-  const update = adminState((state: any) => state.update);
+  const [file, setFile] = useState<any>({ name: "" });
+  const admin: any = adminState((state: any) => state);
   const alertSuccess = alertState((state: any) => state.success);
   const alertError = alertState((state: any) => state.error);
   const inputRef: any = useRef();
   const fileRef: any = useRef();
   const addFile = (file: any) => {
     setFile(file);
+    const result = new FormData();
+    result.append("profile", file);
+    console.log(result);
+
+    admin.profileUpload(result).then((res: any) => {
+      if(res.statusCode) return;
+      admin.profile();
+    });
   };
   const removeFile = () => {
-    setFile({name: ''});
-    fileRef.current.value = '';
+    setFile({ name: "" });
+    fileRef.current.value = "";
   };
   const submitForm = async (values: any) => {
-    const result = await new FormData();
-    await result.append('name',values?.name);
-    await result.append('profile', file);
-      
-    update(result).then(handleResponse);
-  }
+    admin.update(values).then(handleResponse);
+  };
   const handleResponse = (res: any) => {
     if (res?.statusCode) {
       alertError("Error!", res?.message);
@@ -72,105 +75,105 @@ export const EditProfile = () => {
           rounded="md"
           shadow="md"
         >
-          <Formik
-            initialValues={{
-              username: admin?.username as string,
-              name: admin?.name as string,
-              profile: admin?.profile as string,
-            }}
-            validationSchema={ProfileSchema}
-            onSubmit={submitForm}
-          >
-            {({ handleSubmit, errors, touched }) => (
-              <Form onSubmit={handleSubmit}>
-                <VStack spacing={4}>
-                  <Heading as="h3" size="md" noOfLines={1}>
-                    Update Profile
-                  </Heading>
-                  <FormControl>
-                    <FormLabel htmlFor="username">Username</FormLabel>
-                    <Field
-                      disabled
-                      isInvalid={!!errors.username && touched.username}
-                      as={Input}
-                      name="username"
-                      id="username"
-                      type="text"
-                      varient="filled"
-                    />
-                    {touched.username && errors.username && (
-                      <Text as="b" color="tomato">
-                        {errors.username}
-                      </Text>
-                    )}
-                  </FormControl>
-                  <FormControl>
-                    <FormLabel htmlFor="name">Name</FormLabel>
-                    <Field
-                      isInvalid={!!errors.name && touched.name}
-                      as={Input}
-                      name="name"
-                      id="name"
-                      type="text"
-                      varient="filled"
-                    />
-                    {touched.name && errors.name && (
-                      <Text as="b" color="tomato">
-                        {errors.name}
-                      </Text>
-                    )}
-                  </FormControl>
-                  <FormControl>
-                    <FormLabel htmlFor="profile">Profile</FormLabel>
-                    <InputGroup>
-                      <InputLeftElement
-                        pointerEvents="none"
-                        children={<Icon as={FiFile} />}
+          {admin?.username && (
+            <Formik
+              initialValues={{
+                username: admin?.username as string,
+                name: admin?.name as string,
+                profile: admin?.profile as string,
+              }}
+              validationSchema={ProfileSchema}
+              onSubmit={submitForm}
+            >
+              {({ handleSubmit, errors, touched }) => (
+                <Form onSubmit={handleSubmit}>
+                  <VStack spacing={4}>
+                    <Heading as="h3" size="md" noOfLines={1}>
+                      Update Profile
+                    </Heading>
+                    <FormControl>
+                      <FormLabel htmlFor="username">Username</FormLabel>
+                      <Field
+                        disabled
+                        isInvalid={!!errors.username && touched.username}
+                        as={Input}
+                        name="username"
+                        id="username"
+                        type="text"
+                        varient="filled"
                       />
-                      <input
-                        type="file"
-                        onChange={(e: any) => addFile(e.target.files[0])}
-                        accept="image/png, image/gif, image/jpeg"
-                        ref={fileRef}
-                        style={{ display: "none" }}
-                      ></input>
-                      <Input
-                        cursor="pointer"
-                        placeholder="Upload Your Picture"
-                        readOnly={true}
-                        ref={inputRef}
-                        value={file?.name}
-                        onClick={() => {
-                          fileRef.current.click();
-                        }}
-                      />
-
-                      {file?.name && (
-                        <InputRightElement
-                          onClick={() => removeFile()}
-                          children={<Icon as={MdClose} />}
-                        />
+                      {touched.username && errors.username && (
+                        <Text as="b" color="tomato">
+                          {errors.username}
+                        </Text>
                       )}
-                    </InputGroup>
-                    {touched.profile && errors.profile && (
-                      <Text as="b" color="tomato">
-                        {errors.profile}
-                      </Text>
-                    )}
-                  </FormControl>
-                  <Button
-                    bg={"dark"}
-                    color={"white"}
-                    _hover={{ bg: "teal.400" }}
-                    type="submit"
-                    w="full"
-                  >
-                    Submit
-                  </Button>
-                </VStack>
-              </Form>
-            )}
-          </Formik>
+                    </FormControl>
+                    <FormControl>
+                      <FormLabel htmlFor="name">Name</FormLabel>
+                      <Field
+                        isInvalid={!!errors.name && touched.name}
+                        as={Input}
+                        name="name"
+                        id="name"
+                        type="text"
+                        varient="filled"
+                      />
+                      {touched.name && errors.name && (
+                        <Text as="b" color="tomato">
+                          {errors.name}
+                        </Text>
+                      )}
+                    </FormControl>
+                    <FormControl>
+                      <FormLabel htmlFor="profile">Profile</FormLabel>
+                      <InputGroup>
+                        <InputLeftElement
+                          pointerEvents="none"
+                          children={<Icon as={FiFile} />}
+                        />
+                        <input
+                          type="file"
+                          onChange={(e: any) => addFile(e.target.files[0])}
+                          accept="image/png, image/jpeg"
+                          ref={fileRef}
+                          style={{ display: "none" }}
+                        ></input>
+                        <Input
+                          cursor="pointer"
+                          placeholder="Upload Your Picture"
+                          readOnly={true}
+                          ref={inputRef}
+                          value={file?.name}
+                          onClick={() => {
+                            fileRef.current.click();
+                          }}
+                        />
+
+                        {file?.name && (
+                          <InputRightElement
+                            onClick={() => removeFile()}
+                            children={<Icon as={MdClose} />}
+                          />
+                        )}
+                      </InputGroup>
+                      <FormHelperText>
+                          Upload a image within 5MB (Supported Format: JPEG)
+                        </FormHelperText>
+                    </FormControl>
+                    <Button
+                      bg={"dark"}
+                      color={"white"}
+                      _hover={{ bg: "teal.400" }}
+                      type="submit"
+                      w="full"
+                    >
+                      Submit
+                    </Button>
+                  </VStack>
+                </Form>
+              )}
+            </Formik>
+          )}
         </Grid>
       </VStack>
     </Box>

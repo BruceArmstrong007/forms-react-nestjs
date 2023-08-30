@@ -12,7 +12,6 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { SubmitsService } from './submits.service';
 import { SubmitsRequest } from './dto/request/submits.request';
 import { JwtAuthGuard } from '@app/common';
-import { request } from 'https';
 import { FileRequest } from './dto/request/file.request';
 
 @Controller('submits')
@@ -35,18 +34,21 @@ export class SubmitsController {
   async uploadFile(
     @Body() request: FileRequest,
     @UploadedFile() file: Express.Multer.File,
-  ): Promise<object> {
-    return await this.submitsService.uploadFile(
-      file.buffer.toString('base64'),
-      request?.authorID,
-      request?.name,
-      request?.type,
-    );
+  ): Promise<any> {
+    // return await this.submitsService.uploadFile(
+    //   file.buffer.toString('base64'),
+    //   request?.authorID,
+    //   request?.name,
+    //   request?.type,
+    // );
+
+    return '';
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('get-file')
-  async getFile(@Query() id: string): Promise<object> {
-    return await this.submitsService.getFile(id);
+  async getFile(@Query() id: string): Promise<any> {
+    // return await this.submitsService.getFile(id);
+    return '';
   }
 }

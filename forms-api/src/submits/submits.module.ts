@@ -5,18 +5,13 @@ import { FormsModule } from 'src/forms/forms.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Submit, SubmitSchema } from './database/model/submits.model';
 import { SubmitsRepository } from './database/repository/submits.repository';
-import { FileSchema, File } from './database/model/file.model';
-import { FileRepository } from './database/repository/file.repository';
 
 @Module({
   controllers: [SubmitsController],
-  providers: [SubmitsService, SubmitsRepository, FileRepository],
+  providers: [SubmitsService, SubmitsRepository],
   imports: [
     FormsModule,
-    MongooseModule.forFeature([
-      { name: Submit.name, schema: SubmitSchema },
-      { name: File.name, schema: FileSchema },
-    ]),
+    MongooseModule.forFeature([{ name: Submit.name, schema: SubmitSchema }]),
   ],
 })
 export class SubmitsModule {}

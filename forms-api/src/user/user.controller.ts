@@ -1,7 +1,10 @@
 import {
   Body,
   Controller,
+  FileTypeValidator,
   Get,
+  MaxFileSizeValidator,
+  ParseFilePipe,
   Post,
   Put,
   UploadedFile,
@@ -21,26 +24,37 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Get('profile')
-  async profile(@CurrentUser() user: User) {
+  async profile(@CurrentUser() user: User): Promise<User | null> {
     return await this.userService.profile(user?.username);
   }
 
   @Put('update')
-  @UseInterceptors(FileInterceptor('profile'))
   async updateUser(
     @CurrentUser() user: User,
     @Body() request: UpdateUserRequest,
-    @UploadedFile() profile: Express.Multer.File,
-  ) {
-    return await this.userService.updateUser(
-      user?.username,
-      request,
-      profile?.buffer?.toString('base64'),
-    );
+  ): Promise<object> {
+    return await this.userService.updateUser(user?.username, request);
   }
 
   @Post('delete')
-  async deleteUser(@CurrentUser() user: User) {
+  async deleteUser(@CurrentUser() user: User): Promise<object> {
     return await this.userService.deleteUser(user?.username);
+  }
+
+  @Put('upload-profile')
+  @UseInterceptors(FileInterceptor('profile'))
+  async uploadFile(
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 5 * 1024 * 1024 }),
+          new FileTypeValidator({ fileType: 'image/jpeg' }),
+        ],
+      }),
+    )
+    profile: Express.Multer.File,
+    @CurrentUser() user: User,
+  ): Promise<object> {
+    return await this.userService.profileUpload(user?.username, profile);
   }
 }
