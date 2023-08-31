@@ -6,6 +6,8 @@ import { ErrorPage } from "../../shared/components/error-page/ErrorPage";
 import { authState } from "../state/auth-state";
 import { adminState } from "../state/admin-state";
 
+const delay = (t: number) => new Promise(resolve => setTimeout(resolve, t));
+
 export const router = createBrowserRouter([
   {
     path: "",
@@ -27,6 +29,7 @@ export const router = createBrowserRouter([
       {
         path: "auth",
         loader: async () => {
+          await delay(300);
           const auth: any = await authState.getState();
           const token = auth.token.accessToken;
           if (token) throw new Error("Authorized");
@@ -42,6 +45,7 @@ export const router = createBrowserRouter([
       {
         path: "admin",
         loader: async () => {
+          await delay(300);
           let admin: any = adminState.getState();
           let auth: any = await authState.getState();
           let token = auth.token.accessToken;
