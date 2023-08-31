@@ -12,7 +12,6 @@ export class CreateFormRequest {
   @MaxLength(25)
   name: string;
 
-
   @IsObject()
   @IsNotEmpty()
   fields: FormData[];
@@ -32,3 +31,4 @@ export class UpdateFormRequest {
   @IsNotEmpty()
   fields: FormData[];
 }
+

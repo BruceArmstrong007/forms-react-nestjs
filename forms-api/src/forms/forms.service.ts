@@ -24,4 +24,22 @@ export class FormsService {
     await this.formsRepository.deleteForm(id);
     return { message: 'Operation Successful.' };
   }
+
+  async uploadFile(file: Express.Multer.File): Promise<object> {
+    try {
+      const link = await this.formsRepository.uploadFile(file);
+      return { message: 'Operation Successful', link: link };
+    } catch (error: any) {
+      return { message: error.message, statusCode: error.statusCode };
+    }
+  }
+  
+  async deleteFile(fileName: string): Promise<object> {
+    try {
+      await this.formsRepository.deleteFile(fileName);
+      return { message: 'Operation Successful' };
+    } catch (error: any) {
+      return { message: error.message, statusCode: error.statusCode };
+    }
+  }
 }

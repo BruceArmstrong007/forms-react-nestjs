@@ -150,7 +150,7 @@ export const EditProfile = () => {
                         <input
                           type="file"
                           onChange={(e: any) => addFile(e.target.files[0])}
-                          accept="image/png, image/jpeg"
+                          accept="image/jpeg"
                           ref={fileRef}
                           style={{ display: "none" }}
                         ></input>
