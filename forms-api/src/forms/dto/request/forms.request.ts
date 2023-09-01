@@ -1,34 +1,20 @@
-import {
-  IsNotEmpty,
-  IsObject,
-  IsOptional,
-  IsString,
-  MaxLength,
-} from 'class-validator';
+import { IsArray, IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
 
-export class CreateFormRequest {
-  @IsString()
+export class CreateUpdateFormRequest {
+  @IsArray()
   @IsNotEmpty()
+  sections: string;
+
+  @IsString()
   @MaxLength(25)
   name: string;
 
-  @IsObject()
-  @IsNotEmpty()
-  fields: FormData[];
-}
-
-export class UpdateFormRequest {
+  @IsOptional()
   @IsString()
   _id?: string;
-
-  @IsOptional()
-  @IsString()
-  @MaxLength(25)
-  name?: string;
-
-  @IsOptional()
-  @IsObject()
-  @IsNotEmpty()
-  fields: FormData[];
 }
 
+export class DeleteFormRequest {
+  @IsString()
+  _id?: string;
+}

@@ -12,8 +12,8 @@ import { useState } from "react";
 import { InputLeftElement, InputRightElement } from "@chakra-ui/input";
 import { MdAdd, MdClose } from "react-icons/md";
 
-export const Radio = ({ handleAnswer }: any) => {
-  const [radioboxes, setRadioboxes] = useState(["Option"]);
+export const Radio = ({ entries, handleAnswer }: any) => {
+  const [radioboxes, setRadioboxes] = useState(entries);
 
   const handleInputChange = (event: any, index: number) => {
     const updatedArray = [...radioboxes];
@@ -34,7 +34,7 @@ export const Radio = ({ handleAnswer }: any) => {
     handleAnswer(radioboxes);
   };
 
-  const inputFields = radioboxes.map((value, index) => (
+  const inputFields = radioboxes.map((value: any, index: any) => (
     <InputGroup key={index} w="full">
       <InputLeftElement>
         <RadioBox disabled></RadioBox>

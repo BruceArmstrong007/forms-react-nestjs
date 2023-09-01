@@ -4,8 +4,8 @@ import { useState } from "react";
 import { InputRightElement } from "@chakra-ui/input";
 import { MdAdd, MdClose } from "react-icons/md";
 
-export const Select = ({ handleAnswer }: any) => {
-  const [dropboxes, setDropboxes] = useState(["Option"]);
+export const Select = ({ entries, handleAnswer }: any) => {
+  const [dropboxes, setDropboxes] = useState(entries);
 
   const handleInputChange = (event: any, index: number) => {
     const updatedArray = [...dropboxes];
@@ -26,7 +26,7 @@ export const Select = ({ handleAnswer }: any) => {
     handleAnswer(dropboxes);
   };
 
-  const inputFields = dropboxes.map((value, index) => (
+  const inputFields = dropboxes.map((value: any, index: any) => (
     <InputGroup key={index} w="full">
       <Input
         w="full"

@@ -5,8 +5,8 @@ import { UserRoutes } from "./user/UserRoutes";
 import { ErrorPage } from "../../shared/components/error-page/ErrorPage";
 import { authState } from "../state/auth-state";
 import { adminState } from "../state/admin-state";
+import { delay } from "../../shared/utils/functions";
 
-const delay = (t: number) => new Promise(resolve => setTimeout(resolve, t));
 
 export const router = createBrowserRouter([
   {

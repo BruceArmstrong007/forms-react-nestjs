@@ -62,8 +62,8 @@ export const Title = ({ title, setTitle }: any) => {
         }}
       >
         <EditablePreview
-          w={"full"}
-          fontSize={"2xl"}
+          w="full"
+          fontSize="xl"
           {...(title.options.italic === true ? { fontStyle: "italic" } : {})}
           {...(title.options.bold === true ? { fontWeight: "bold" } : {})}
           {...(title.options.underline === true
@@ -72,7 +72,7 @@ export const Title = ({ title, setTitle }: any) => {
         />
         <Input
           // onMouseUp={handleHighlight}
-          fontSize={"2xl"}
+          fontSize="xl"
           variant="flushed"
           as={EditableInput}
         />

@@ -2,6 +2,7 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Form } from '../model/forms.model';
+import { UserRepository } from '../../../user/database/repository/user.repository';
 import {
   FirebaseStorage,
   deleteObject,
@@ -18,40 +19,37 @@ export class FormsRepository {
     @InjectModel(Form.name) public readonly formModel: Model<Form>,
     @Inject('FIREBASE_STORAGE')
     private readonly firebaseStorage: FirebaseStorage,
+    private readonly userRepository: UserRepository,
   ) {}
 
   async findByID(id: string): Promise<Form | null> {
     return await this.formModel.findById(id).exec();
   }
 
-  async findByAuthorID(id: string): Promise<Form | null> {
-    return await this.formModel.findOne({ authorID: id }).exec();
+  async findByAuthorUsername(username: string): Promise<Form[] | null> {
+    const authorID = await this.getAuthorID(username);
+    return await this.formModel.find({ authorID: authorID }).exec();
   }
 
-  async createForm(
-    name: string,
-    fields: object,
-    authorID: string,
-  ): Promise<Form> {
-    const newForm = new this.formModel({
-      name,
-      fields,
-      authorID,
+  async getAuthorID(username: string) {
+    const author = await this.userRepository.findByUsername(username);
+    return author?._id;
+  }
+
+  async createForm(updates: any) {
+    const form = new this.formModel({
+      name: updates?.name,
+      sections: updates?.sections,
+      authorID: updates?.authorID,
     });
-    await newForm.save();
-    return newForm._id.toString();
+
+    await form.save();
+    return form
   }
 
-  async updateForm(id: string, updates: Partial<Form>): Promise<Form | null> {
-    return this.formModel
-      .findByIdAndUpdate(
-        id,
-        {
-          ...updates,
-        },
-        { new: true },
-      )
-      .exec();
+  async updateForm(id: string, updates: any) {
+    await this.formModel.updateOne({ _id: id }, updates).exec();
+    return id;
   }
 
   async deleteForm(id: string) {

@@ -5,7 +5,6 @@ import { Question } from "../fields/question/Question";
 import { Select } from "@chakra-ui/select";
 import { IconButton } from "@chakra-ui/button";
 import Icon from "@chakra-ui/icon";
-import { FaImage } from "react-icons/fa";
 import { Text } from "../fields/text/text";
 import { TextArea } from "../fields/text-area/TextArea";
 import { Date } from "../fields/date/Date";
@@ -13,6 +12,8 @@ import { Time } from "../fields/time/Time";
 import { CheckBox } from "../fields/checkbox/CheckBox";
 import { Radio } from "../fields/radio/Radio";
 import { Select as DropBox } from "../fields/select/Select";
+import { MdDelete } from "react-icons/md";
+import { Tooltip } from "@chakra-ui/react";
 
 interface QuestionData {
   name: string;
@@ -25,29 +26,16 @@ interface AnswerData {
   entries: any[];
 }
 
-const initialQuestionState = {
-  name: "Enter Question",
-  type: "question",
-  options: {
-    bold: false,
-    italic: false,
-    underline: false,
-  },
-};
+export const Questions = ({ value, getData, deleteData }: any) => {
+  const [question, setQuestion] = useState<QuestionData>(value?.data[0]);
+  const [answer, setAnswer] = useState<AnswerData>(value?.data[1]);
 
-const initialAnswerState = {
-  type: "answer",
-  option: "text",
-  entries: [],
-};
-
-export const Questions = ({ getData }: any) => {
-  const [question, setQuestion] = useState<QuestionData>(initialQuestionState);
-  const [answer, setAnswer] = useState<AnswerData>(initialAnswerState);
+  
 
   useEffect(() => {
-    getData(question, answer);
-  }, [question, answer, getData]);
+    const data = [question, answer];
+    getData(value?.index, value?.type, data);
+  }, [value, question, answer, getData]);
 
   const handleAnswer = (entries: any[]) => {
     setAnswer({ ...answer, entries: entries });
@@ -64,9 +52,6 @@ export const Questions = ({ getData }: any) => {
       >
         <HStack w="full">
           <Question question={question} setQuestion={setQuestion} />
-          <IconButton aria-label="Add Image">
-            <Icon as={FaImage}></Icon>
-          </IconButton>
           <Select
             defaultValue={answer.option}
             onChange={(e) => setAnswer({ ...answer, option: e.target.value })}
@@ -80,16 +65,33 @@ export const Questions = ({ getData }: any) => {
             <option value="checkbox">Check Boxes</option>
             <option value="radio">Multiple Choice</option>
           </Select>
+          <Tooltip
+            label="Delete Questions"
+            placement="left"
+            closeOnClick={false}
+          >
+            <IconButton
+              aria-label="Delete Questions"
+              variant="outline"
+              isRound={true}
+              size="xs"
+              colorScheme="white"
+              _hover={{ backgroundColor: "red", border: "teal" }}
+              onClick={() => deleteData(value?.index)}
+            >
+              <Icon as={MdDelete}></Icon>
+            </IconButton>
+          </Tooltip>
         </HStack>
         {answer.option === "text" && <Text />}
         {answer.option === "textarea" && <TextArea />}
         {answer.option === "date" && <Date />}
         {answer.option === "time" && <Time />}
         {answer.option === "checkbox" && (
-          <CheckBox handleAnswer={handleAnswer} />
+          <CheckBox entries={answer.entries} handleAnswer={handleAnswer} />
         )}
-        {answer.option === "radio" && <Radio handleAnswer={handleAnswer} />}
-        {answer.option === "select" && <DropBox handleAnswer={handleAnswer} />}
+        {answer.option === "radio" && <Radio entries={answer.entries} handleAnswer={handleAnswer} />}
+        {answer.option === "select" && <DropBox entries={answer.entries} handleAnswer={handleAnswer} />}
       </VStack>
     </Box>
   );

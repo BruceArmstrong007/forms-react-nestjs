@@ -1,23 +1,34 @@
 import { Injectable } from '@nestjs/common';
-import { UpdateFormRequest } from './dto/request/forms.request';
 import { FormsRepository } from './database/repository/forms.repository';
+import { Form } from './database/model/forms.model';
+import { CreateUpdateFormRequest } from './dto/request/forms.request';
+import { Types } from 'mongoose';
 
 @Injectable()
 export class FormsService {
   constructor(private readonly formsRepository: FormsRepository) {}
 
-  async createForm(
-    name: string,
-    fields: object,
-    authorID: string,
-  ): Promise<any> {
-    return await this.formsRepository.createForm(name, fields, authorID);
+  async getForms(username: string): Promise<Form[] | null> {
+    return await this.formsRepository.findByAuthorUsername(username);
   }
 
-  async updateForm(data: UpdateFormRequest): Promise<object> {
-    const { _id, ...fields } = data;
-    await this.formsRepository.updateForm(_id, fields as any);
-    return { message: 'Operation Successful.' };
+  async createUpdateForm(
+    data: CreateUpdateFormRequest,
+    username: string,
+  ): Promise<object> {
+
+    const form = {
+      name: data?.name,
+      sections: data?.sections,
+      authorID: await this.formsRepository.getAuthorID(username),
+    };
+    let formID: any;
+    if (data?._id) {
+      formID = await this.formsRepository.updateForm(data?._id, form);
+    } else {
+      formID = (await this.formsRepository.createForm(form))?._id;
+    }
+    return { message: 'Operation Successful.', formID : formID };
   }
 
   async deleteForm(id: string): Promise<object> {
@@ -33,7 +44,7 @@ export class FormsService {
       return { message: error.message, statusCode: error.statusCode };
     }
   }
-  
+
   async deleteFile(fileName: string): Promise<object> {
     try {
       await this.formsRepository.deleteFile(fileName);

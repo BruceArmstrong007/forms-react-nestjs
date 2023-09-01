@@ -62,8 +62,8 @@ export const Question = ({ question, setQuestion }: any) => {
         }}
       >
         <EditablePreview
-          w={"full"}
-          fontSize={"2xl"}
+          w="full"
+          fontSize="xl"
           {...(question.options.italic === true ? { fontStyle: "italic" } : {})}
           {...(question.options.bold === true ? { fontWeight: "bold" } : {})}
           {...(question.options.underline === true
@@ -72,7 +72,7 @@ export const Question = ({ question, setQuestion }: any) => {
         />
         <Input
           // onMouseUp={handleHighlight}
-          fontSize="lg"
+          fontSize="xl"
           variant="flushed"
           as={EditableInput}
         />

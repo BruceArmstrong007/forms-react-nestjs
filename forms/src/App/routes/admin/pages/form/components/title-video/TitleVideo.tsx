@@ -3,6 +3,8 @@ import { Title } from "../fields/title/Title";
 import { useState, useEffect } from "react";
 import { Options } from "../../../../../../../shared/utils/interface";
 import { Video } from "../fields/video/Video";
+import { HStack, Icon, IconButton, Tooltip } from "@chakra-ui/react";
+import { MdDelete } from "react-icons/md";
 
 interface TitleData {
   name: string;
@@ -13,28 +15,14 @@ interface VidData {
   url: string;
 }
 
-const initialTitleState = {
-  type: "title",
-  name: "Enter Video Title",
-  options: {
-    bold: false,
-    italic: false,
-    underline: false,
-  },
-};
-
-const initialVidState = {
-  type: "video",
-  url: "",
-};
-
-export const TitleVideo = ({ getData }: any) => {
-  const [title, setTitle] = useState<TitleData>(initialTitleState);
-  const [video, setVideo] = useState<VidData>(initialVidState);
+export const TitleVideo = ({ value, getData, deleteData }: any) => {
+  const [title, setTitle] = useState<TitleData>(value?.data[0]);
+  const [video, setVideo] = useState<VidData>(value?.data[1]);
 
   useEffect(() => {
-    getData(title, video);
-  }, [title, video, getData]);
+    const data = [title, video];
+    getData(value?.index, value?.type, data);
+  }, [value, title, video, getData]);
 
   return (
     <Box w="full">
@@ -45,7 +33,22 @@ export const TitleVideo = ({ getData }: any) => {
         justifyContent="start"
         spacing={1}
       >
-        <Title title={title} setTitle={setTitle} />
+        <HStack w="full">
+          <Title title={title} setTitle={setTitle}></Title>
+          <Tooltip label="Delete Video" placement="left" closeOnClick={false}>
+            <IconButton
+              variant="outline"
+              isRound={true}
+              size="xs"
+              colorScheme="white"
+              _hover={{ backgroundColor: "red", border: "teal" }}
+              aria-label="Delete Video Field"
+              onClick={() => deleteData(value?.index)}
+            >
+              <Icon as={MdDelete}></Icon>
+            </IconButton>
+          </Tooltip>
+        </HStack>
         <Video video={video} setVideo={setVideo} />
       </VStack>
     </Box>

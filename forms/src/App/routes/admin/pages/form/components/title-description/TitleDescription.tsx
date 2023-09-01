@@ -1,42 +1,27 @@
-import { Box, VStack } from "@chakra-ui/layout";
+import { Box, VStack, HStack } from "@chakra-ui/layout";
 import { Title } from "../fields/title/Title";
 import { useState, useEffect } from "react";
 import { Description } from "../fields/description/description";
 import { Options } from "../../../../../../../shared/utils/interface";
+import { Icon, IconButton, Tooltip } from "@chakra-ui/react";
+import { MdDelete } from "react-icons/md";
 
 interface Data {
   name: string;
+  index: number;
   type: string;
   options: Options;
 }
 
-const initialTitleState = {
-  name: "Enter Title",
-  type: "title",
-  options: {
-    bold: false,
-    italic: false,
-    underline: false,
-  },
-};
-
-const initialDescriptionState = {
-  name: "Enter Description",
-  type: "description",
-  options: {
-    bold: false,
-    italic: false,
-    underline: false,
-  },
-};
-
-export const TitleDescription = ({ getData }: any) => {
-  const [title, setTitle] = useState<Data>(initialTitleState);
-  const [description, setDescription] = useState<Data>(initialDescriptionState);
+export const TitleDescription = ({ value, getData, deleteData }: any) => {
+  
+  const [title, setTitle] = useState<Data>(value?.data[0]);
+  const [description, setDescription] = useState<Data>(value?.data[1]);
 
   useEffect(() => {
-    getData(title, description);
-  }, [title, description, getData]);
+    const data = [title, description];
+    getData(value?.index, value?.type, data);
+  }, [title, description, value, getData]);
 
   return (
     <Box w="full">
@@ -47,7 +32,26 @@ export const TitleDescription = ({ getData }: any) => {
         justifyContent="start"
         spacing={1}
       >
-        <Title title={title} setTitle={setTitle}></Title>
+        <HStack w="full">
+          <Title title={title} setTitle={setTitle}></Title>
+          <Tooltip
+            label="Delete Title Description"
+            placement="left"
+            closeOnClick={false}
+          >
+            <IconButton
+              onClick={() => deleteData(value?.index)}
+              variant="outline"
+              isRound={true}
+              size="xs"
+              colorScheme="white"
+              _hover={{ backgroundColor: "red", border: "teal" }}
+              aria-label="Delete Title Description Field"
+            >
+              <Icon as={MdDelete}></Icon>
+            </IconButton>
+          </Tooltip>
+        </HStack>
         <Description
           description={description}
           setDescription={setDescription}

@@ -12,8 +12,8 @@ import { useState } from "react";
 import { InputLeftElement, InputRightElement } from "@chakra-ui/input";
 import { MdAdd, MdClose } from "react-icons/md";
 
-export const CheckBox = ({ handleAnswer }: any) => {
-  const [checkboxes, setCheckboxes] = useState(["Option"]);
+export const CheckBox = ({ entries, handleAnswer }: any) => {
+  const [checkboxes, setCheckboxes] = useState(entries);
 
   const handleInputChange = (event: any, index: number) => {
     const updatedArray = [...checkboxes];
@@ -34,7 +34,7 @@ export const CheckBox = ({ handleAnswer }: any) => {
     handleAnswer(checkboxes)
   };
 
-  const inputFields = checkboxes.map((value, index) => (
+  const inputFields = checkboxes.map((value: any, index: any) => (
     <InputGroup key={index} w="full">
       <InputLeftElement>
         <Checkbox disabled></Checkbox>

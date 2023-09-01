@@ -9,7 +9,7 @@ import {
 import { Controls } from "./Controls";
 import { useState } from "react";
 
-export const Description = ({ description, setDescription }: any) => {
+export const Section = ({ section, setSection }: any) => {
   const [editing, setEditing] = useState<boolean>(false);
 
   // const handleHighlight = () => {
@@ -21,26 +21,29 @@ export const Description = ({ description, setDescription }: any) => {
 
   const handleClick = (data: any) => {
     if (data === "bold") {
-      setDescription({
-        ...description,
-        options: { ...description.options, bold: !description.options.bold },
+      setSection({
+        ...section,
+        options: {
+          ...section.options,
+          bold: !section.options.bold,
+        },
       });
     }
     if (data === "italic") {
-      setDescription({
-        ...description,
+      setSection({
+        ...section,
         options: {
-          ...description.options,
-          italic: !description.options.italic,
+          ...section.options,
+          italic: !section.options.italic,
         },
       });
     }
     if (data === "underline") {
-      setDescription({
-        ...description,
+      setSection({
+        ...section,
         options: {
-          ...description.options,
-          underline: !description.options.underline,
+          ...section.options,
+          underline: !section.options.underline,
         },
       });
     }
@@ -53,25 +56,23 @@ export const Description = ({ description, setDescription }: any) => {
       onMouseLeave={() => setEditing(false)}
     >
       <Editable
-        defaultValue={description.name}
+        defaultValue={section.name}
         onChange={(e) => {
-          setDescription({ ...description, name: e });
+          setSection({ ...section, name: e });
         }}
       >
         <EditablePreview
           w="full"
-          fontSize="md"
-          {...(description.options.italic === true
-            ? { fontStyle: "italic" }
-            : {})}
-          {...(description.options.bold === true ? { fontWeight: "bold" } : {})}
-          {...(description.options.underline === true
+          fontSize="2xl"
+          {...(section.options.italic === true ? { fontStyle: "italic" } : {})}
+          {...(section.options.bold === true ? { fontWeight: "bold" } : {})}
+          {...(section.options.underline === true
             ? { textDecoration: "underline" }
             : {})}
         />
         <Input
           // onMouseUp={handleHighlight}
-          fontSize="md"
+          fontSize="2xl"
           variant="flushed"
           as={EditableInput}
         />
@@ -80,7 +81,7 @@ export const Description = ({ description, setDescription }: any) => {
         <Controls
           handleClick={handleClick}
           isControls={editing}
-          options={description.options}
+          options={section.options}
         />
       </Collapse>
     </Box>

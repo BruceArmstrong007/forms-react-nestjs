@@ -3,6 +3,8 @@ import { Title } from "../fields/title/Title";
 import { useState, useEffect } from "react";
 import { Options } from "../../../../../../../shared/utils/interface";
 import { Image } from "../fields/image/Image";
+import { HStack, Icon, IconButton, Tooltip } from "@chakra-ui/react";
+import { MdDelete } from "react-icons/md";
 
 interface TitleData {
   name: string;
@@ -14,29 +16,14 @@ interface ImgData {
   url: string;
 }
 
-const initialTitleState = {
-  name: "Enter Image Title",
-  type: "title",
-  options: {
-      bold: false,
-      italic: false,
-      underline: false
-  }
-}
-
-
-const initialImgState = {
-  url: "",
-  type: "image",
-};
-
-export const TitleImage = ({ getData }: any) => {
-  const [title, setTitle] = useState<TitleData>(initialTitleState);
-  const [image, setImage] = useState<ImgData>(initialImgState);
+export const TitleImage = ({ value, getData, deleteData }: any) => {
+  const [title, setTitle] = useState<TitleData>(value?.data[0]);
+  const [image, setImage] = useState<ImgData>(value?.data[1]);
 
   useEffect(() => {
-    getData(title, image);
-  }, [title, image, getData]);
+    const data = [title, image];
+    getData(value?.index, value?.type, data);
+  }, [value, title, image, getData]);
 
   return (
     <Box w="full">
@@ -47,7 +34,22 @@ export const TitleImage = ({ getData }: any) => {
         justifyContent="start"
         spacing={1}
       >
-        <Title title={title} setTitle={setTitle} />
+        <HStack w="full">
+          <Title title={title} setTitle={setTitle}></Title>
+          <Tooltip label="Delete Image" placement="left" closeOnClick={false}>
+            <IconButton
+              variant="outline"
+              isRound={true}
+              size="xs"
+              colorScheme="white"
+              _hover={{ backgroundColor: "red", border: "teal" }}
+              aria-label="Delete Image Field"
+              onClick={() => deleteData(value?.index)}
+            >
+              <Icon as={MdDelete}></Icon>
+            </IconButton>
+          </Tooltip>
+        </HStack>
         <Image image={image} setImage={setImage} />
       </VStack>
     </Box>

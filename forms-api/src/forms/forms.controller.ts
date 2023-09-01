@@ -12,44 +12,37 @@ import {
   MaxFileSizeValidator,
   FileTypeValidator,
   Param,
+  Get,
 } from '@nestjs/common';
 import { User } from 'src/user/database/model/user.model';
 import { FormsService } from './forms.service';
 import {
-  CreateFormRequest,
-  DeleteFileRequest,
-  UpdateFormRequest,
+  CreateUpdateFormRequest,
 } from './dto/request/forms.request';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { Form } from './database/model/forms.model';
 
 @UseGuards(JwtAuthGuard)
 @Controller('forms')
 export class FormsController {
   constructor(private readonly formService: FormsService) {}
 
-  @Post('create')
-  async createForm(
+  @Post('save')
+  async createUpdateForm(
     @CurrentUser() user: User,
-    @Body() request: CreateFormRequest,
-  ) {
-    return await this.formService.createForm(
-      request?.name,
-      request?.fields,
-      user?._id,
-    );
+    @Body() request: CreateUpdateFormRequest,
+  ): Promise<object> {
+    return await this.formService.createUpdateForm(request, user?.username);
   }
 
-  @Put('update')
-  async updateForm(
-    @CurrentUser() user: User,
-    @Body() request: UpdateFormRequest,
-  ) {
-    return await this.formService.updateForm(request);
+  @Get('list')
+  async getForms(@CurrentUser() user: User): Promise<Form[] | null> {
+    return await this.formService.getForms(user?.username);
   }
 
-  @Delete('delete')
-  async deleteForm(@Body() request: UpdateFormRequest) {
-    return await this.formService.deleteForm(request?._id);
+  @Delete('delete/:formID')
+  async deleteForm(@Param('formID') formID: string) {
+    return await this.formService.deleteForm(formID);
   }
 
   @Put('image-upload')
