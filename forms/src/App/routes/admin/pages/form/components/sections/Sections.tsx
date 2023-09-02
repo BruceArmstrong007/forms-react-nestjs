@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Options } from "../../../../../../../shared/utils/interface";
+import { DescriptionData, FieldsData, Options, SectionData } from "../../../../../../../shared/utils/interface";
 import { HStack, VStack } from "@chakra-ui/layout";
 import { IconButton } from "@chakra-ui/button";
 import Icon from "@chakra-ui/icon";
@@ -19,23 +19,6 @@ import {
   MenuList,
   Tooltip,
 } from "@chakra-ui/react";
-
-export interface SectionData {
-  name: string;
-  type: string;
-  options: Options;
-}
-export interface DescriptionData {
-  name: string;
-  type: string;
-  options: Options;
-}
-
-export interface FieldsData {
-  type: string;
-  data: any[];
-  index: number;
-}
 
 export const Sections = ({
   index,

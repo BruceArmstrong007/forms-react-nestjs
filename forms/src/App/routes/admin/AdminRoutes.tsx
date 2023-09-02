@@ -5,12 +5,6 @@ import { delay } from "../../../shared/utils/functions";
 export const AdminRoutes = [
   {
     path: "dashboard",
-    loader: async () => {
-      await delay(100);
-      const form: any = await formState.getState();
-      if (form.forms.length === 0) await form.getForms();
-      return true;
-    },
     async lazy() {
       let { Dashboard } = await import("./pages/dashboard/Dashboard");
       return { Component: Dashboard };

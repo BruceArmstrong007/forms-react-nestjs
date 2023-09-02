@@ -60,6 +60,26 @@ export const File = ({ entries, handleAnswer }: any) => {
           <Collapse in={fileType?.type} animateOpacity>
             <CheckboxGroup colorScheme="green">
               <HStack w="full" spacing={2}>
+              <Checkbox
+                  size="sm"
+                  {...(fileType?.options?.includes("txt")
+                    ? { defaultChecked: true }
+                    : {})}
+                  colorScheme="green"
+                  onChange={(e) => switchType(e.target.checked, "txt")}
+                >
+                  TXT (Text)
+                </Checkbox>
+              <Checkbox
+                  size="sm"
+                  {...(fileType?.options?.includes("csv")
+                    ? { defaultChecked: true }
+                    : {})}
+                  colorScheme="green"
+                  onChange={(e) => switchType(e.target.checked, "csv")}
+                >
+                  CSV
+                </Checkbox>
                 <Checkbox
                   size="sm"
                   {...(fileType?.options?.includes("pdf")
@@ -78,7 +98,7 @@ export const File = ({ entries, handleAnswer }: any) => {
                   colorScheme="green"
                   onChange={(e) => switchType(e.target.checked, "image")}
                 >
-                  Image
+                  Image Formats
                 </Checkbox>
                 <Checkbox
                   size="sm"
@@ -88,7 +108,7 @@ export const File = ({ entries, handleAnswer }: any) => {
                   colorScheme="green"
                   onChange={(e) => switchType(e.target.checked, "video")}
                 >
-                  Video
+                  Video Formats
                 </Checkbox>
               </HStack>
             </CheckboxGroup>

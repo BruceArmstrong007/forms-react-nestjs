@@ -44,7 +44,7 @@ export class FormsRepository {
     });
 
     await form.save();
-    return form
+    return form;
   }
 
   async updateForm(id: string, updates: any) {
@@ -58,7 +58,10 @@ export class FormsRepository {
 
   async uploadFile(file: Express.Multer.File): Promise<string | undefined> {
     const fileData = file.buffer;
-    const storageRef = ref(this.firebaseStorage, 'form/' + file?.originalname);
+    const storageRef = ref(
+      this.firebaseStorage,
+      'submits/' + file?.originalname,
+    );
     const metadata = {
       contentType: file.mimetype,
     };
@@ -67,7 +70,7 @@ export class FormsRepository {
   }
 
   async deleteFile(fileName: string) {
-    const fileRef = ref(this.firebaseStorage, 'form/' + fileName);
+    const fileRef = ref(this.firebaseStorage, 'submits/' + fileName);
     await deleteObject(fileRef);
   }
 }

@@ -6,12 +6,12 @@ import { ErrorPage } from "../../shared/components/error-page/ErrorPage";
 import { authState } from "../state/auth-state";
 import { adminState } from "../state/admin-state";
 import { delay } from "../../shared/utils/functions";
-
+import { formState } from "../state/form-state";
 
 export const router = createBrowserRouter([
   {
     path: "",
-  loader: async () => {
+    loader: async () => {
       const auth: any = authState.getState();
       if (!auth.token.refreshToken) return true;
       const response: any = await auth.refresh();
@@ -50,6 +50,9 @@ export const router = createBrowserRouter([
           let auth: any = await authState.getState();
           let token = auth.token.accessToken;
           if (!token) throw new Error("UnAuthorized");
+
+          const form: any = await formState.getState();
+          if (form.forms.length === 0) await form.getForms();
           else return await admin.getProfile();
         },
         errorElement: <Navigate to="/auth/login" />,
@@ -61,6 +64,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "user",
+        errorElement: <Navigate to="/auth/login" />,
         async lazy() {
           let { User } = await import("./user/User");
           return { Component: User };

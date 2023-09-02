@@ -16,11 +16,9 @@ import {
 } from '@nestjs/common';
 import { User } from 'src/user/database/model/user.model';
 import { FormsService } from './forms.service';
-import {
-  CreateUpdateFormRequest,
-} from './dto/request/forms.request';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Form } from './database/model/forms.model';
+import { CreateUpdateFormRequest } from './dto/request/forms.request';
 
 @UseGuards(JwtAuthGuard)
 @Controller('forms')

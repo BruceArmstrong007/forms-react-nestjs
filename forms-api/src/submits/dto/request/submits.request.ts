@@ -1,14 +1,15 @@
-import {
-  IsNotEmpty,
-  IsString,
-} from 'class-validator';
-
+import { IsArray, IsNotEmpty, IsString } from 'class-validator';
 
 export class SubmitsRequest {
   @IsString()
   @IsNotEmpty()
   authorID?: string;
 
+  @IsString()
   @IsNotEmpty()
-  data: any;
+  formID?: string;
+
+  @IsNotEmpty()
+  @IsArray()
+  sections: any;
 }

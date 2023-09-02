@@ -13,23 +13,30 @@ export class SubmitsService {
     return await this.formsRepository.findByID(id);
   }
 
-  async submitForm(data: object, authorID: string): Promise<object> {
-    await this.submitsRepository.storeForm(data, authorID);
+  async submitForm(
+    sections: any[],
+    authorID: string,
+    formID: string,
+  ): Promise<object> {
+    await this.submitsRepository.storeForm(sections, authorID, formID);
     return { message: 'Operation successful.' };
   }
 
-  // async uploadFile(
-  //   file: string,
-  //   authorID: string,
-  //   name: string,
-  //   type: string,
-  // ): Promise<object> {
-  //   return {
-  //     _id: await this.fileRepository.uploadFile(file, authorID, name, type),
-  //   };
-  // }
+  async uploadFile(file: Express.Multer.File): Promise<object> {
+    try {
+      const link = await this.formsRepository.uploadFile(file);
+      return { message: 'Operation Successful', link: link };
+    } catch (error: any) {
+      return { message: error.message, statusCode: error.statusCode };
+    }
+  }
 
-  // async getFile(id: string): Promise<object> {
-  //   return await this.fileRepository.getFile(id);
-  // }
+  async deleteFile(fileName: string): Promise<object> {
+    try {
+      await this.formsRepository.deleteFile(fileName);
+      return { message: 'Operation Successful' };
+    } catch (error: any) {
+      return { message: error.message, statusCode: error.statusCode };
+    }
+  }
 }

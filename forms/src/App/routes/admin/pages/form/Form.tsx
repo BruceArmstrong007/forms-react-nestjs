@@ -1,28 +1,11 @@
 import { Box, VStack } from "@chakra-ui/layout";
-import {
-  DescriptionData,
-  FieldsData,
-  SectionData,
-  Sections,
-} from "./components/sections/Sections";
+import { Sections } from "./components/sections/Sections";
 import { useState } from "react";
 import { useToast } from "@chakra-ui/react";
 import { formState } from "../../../../state/form-state";
 import { Options } from "./components/options/Options";
 import { useParams } from "react-router-dom";
-
-interface Section {
-  section: SectionData;
-  description: DescriptionData;
-  index: number;
-  fields: FieldsData[];
-}
-
-export interface FormData {
-  sections: Section[];
-  name: string;
-  _id: string;
-}
+import { DescriptionData, FieldsData, FormData, SectionData } from "../../../../../shared/utils/interface";
 
 const initialSectionState = {
   name: "Enter Section",
@@ -62,7 +45,7 @@ export const Form = () => {
   const forms: any = formState((state) => state);
   const params = useParams();
   const [form, setForm] = useState<FormData>(
-    forms.forms.find((form: any) => params?.id === form._id )
+    forms.forms.find((form: any) => params?.id === form._id)
   );
 
   const deleteSection = (index: any) => {
