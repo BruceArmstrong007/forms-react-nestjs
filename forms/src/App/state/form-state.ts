@@ -4,12 +4,13 @@ import {
   uploadFile,
   saveForm,
   getForms,
-  deleteForm
+  deleteForm,
 } from "../api/form-request";
 import { UploadOptions } from "../../shared/utils/enums";
 
 export const formState = create((set, get) => ({
   forms: [],
+  responses: [],
   uploadFile: async (file: any, type: UploadOptions) => {
     const response = await uploadFile(file, type);
     return response;

@@ -49,27 +49,9 @@ export const Navbar = () => {
       >
         <Flex flex={{ base: 1 }} justify={{ base: "start", md: "start" }}>
           <HStack spacing={4}>
-            <Link to={"/"}>
+            <Link to={"/admin/dashboard"}>
               <Logo h="30px" />
             </Link>
-            <Button
-              as={NavLink}
-              to="/admin/dashboard"
-              fontSize={"sm"}
-              fontWeight={400}
-              variant={"link"}
-            >
-              Dashboard
-            </Button>
-            <Button
-              as={NavLink}
-              to="/admin/forms"
-              fontSize={"sm"}
-              fontWeight={400}
-              variant={"link"}
-            >
-              Forms
-            </Button>
           </HStack>
           <Flex display={{ base: "none", md: "flex" }} ml={10}></Flex>
         </Flex>

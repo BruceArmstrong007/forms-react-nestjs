@@ -15,6 +15,7 @@ import {
   FormLabel,
   FormHelperText,
   FocusLock,
+  VStack,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import Icon from "@chakra-ui/icon";
@@ -30,6 +31,7 @@ import {
   PopoverCloseButton,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
+import { FaWpforms } from "react-icons/fa";
 
 const initialSectionState = {
   name: "Enter Section",
@@ -113,7 +115,7 @@ export const Dashboard = () => {
     await form.getForms();
   };
 
-  const shareForm = async (formID: string) => {
+  const shareForm = (formID: string) => {
     const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(
       "Hey Checkout this new Form!"
     )}&body=${encodeURIComponent(
@@ -125,6 +127,10 @@ export const Dashboard = () => {
 
     // Open the user's default email client with the pre-filled content
     window.location.href = mailtoLink;
+  };
+
+  const viewResponses = (formID: string) => {
+    navigate("/admin/responses/" + formID);
   };
 
   const renderForm = form.forms.map((data: any) => {
@@ -141,6 +147,19 @@ export const Dashboard = () => {
           </CardHeader>
           <CardBody onClick={() => openForm(data?._id)}></CardBody>
           <CardFooter>
+            <Tooltip label="View Responses" placement="bottom">
+              <IconButton
+                size="xs"
+                onClick={() => viewResponses(data?._id)}
+                aria-label="View Responses"
+                variant="outline"
+                colorScheme="white"
+                _hover={{ backgroundColor: "blue", border: "transparent" }}
+                isRound={true}
+              >
+                <Icon as={FaWpforms}></Icon>
+              </IconButton>
+            </Tooltip>
             <Box w="full" display="flex" justifyContent="end" alignItems="end">
               <ButtonGroup>
                 <Popover
@@ -235,7 +254,15 @@ export const Dashboard = () => {
   });
 
   return (
-    <Box w="full" padding="20px">
+    <VStack
+      w="full"
+      padding="20px"
+      spacing={4}
+      display="flex"
+      justifyContent="start"
+      alignItems="start"
+    >
+      <Heading>Dashboard</Heading>
       <SimpleGrid columns={{ sm: 1, md: 2, lg: 3, xl: 6 }} spacing={4}>
         {renderForm}
         <Tooltip label="Add Form" placement="bottom">
@@ -252,6 +279,6 @@ export const Dashboard = () => {
           </Box>
         </Tooltip>
       </SimpleGrid>
-    </Box>
+    </VStack>
   );
 };

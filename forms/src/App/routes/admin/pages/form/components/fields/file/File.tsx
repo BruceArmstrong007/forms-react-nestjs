@@ -19,10 +19,9 @@ interface FileType {
   options: string[];
 }
 
-export const File = ({  entries, handleAnswer }: any) => {
+export const File = ({ entries, handleAnswer }: any) => {
   const [fileType, setFileType] = useState<FileType>(entries[0]);
 
-console.log(entries[0])  
   const fileTypeRequired = (required: boolean) => {
     setFileType({ ...fileType, type: required });
   };
@@ -40,60 +39,61 @@ console.log(entries[0])
 
   return (
     <Box w="full">
-      <VStack
-        display="flex"
-        justifyContent="start"
-        alignItems="start"
-        spacing={2}
-        w="full"
-      >
-        <FormControl display="flex" alignItems="center">
-          <FormLabel htmlFor="filetype" mb="0">
-            Allow only specific file types ?
-          </FormLabel>
-          <Switch
-            id="filetype"
-            onChange={(e) => fileTypeRequired(e.target.checked)}
-            defaultChecked={fileType?.type}
-          />
-        </FormControl>
+      <Box display="flex" justifyContent="space-between" w="full">
+        <VStack
+          display="flex"
+          justifyContent="start"
+          alignItems="start"
+          spacing={2}
+        >
+          <FormControl display="flex" alignItems="center">
+            <FormLabel htmlFor="filetype" mb="0">
+              Allow only specific file types ?
+            </FormLabel>
+            <Switch
+              id="filetype"
+              onChange={(e) => fileTypeRequired(e.target.checked)}
+              defaultChecked={fileType?.type}
+            />
+          </FormControl>
 
-        <Collapse in={fileType?.type} animateOpacity>
-          <CheckboxGroup colorScheme="green">
-            <HStack w="full" spacing={2}>
-              <Checkbox
-                size="sm"
-                {...(fileType?.options?.includes("pdf")
-                  ? { defaultChecked: true }
-                  : {})}
-                colorScheme="green"
-                onChange={(e) => switchType(e.target.checked, "pdf")}
-              >
-                PDF
-              </Checkbox>
-              <Checkbox
-                size="sm"
-                {...(fileType?.options?.includes("image")
-                  ? { defaultChecked: true }
-                  : {})}
-                colorScheme="green"
-                onChange={(e) => switchType(e.target.checked, "image")}
-              >
-                Image
-              </Checkbox>
-              <Checkbox
-                size="sm"
-                {...(fileType?.options?.includes("video")
-                  ? { defaultChecked: true }
-                  : {})}
-                colorScheme="green"
-                onChange={(e) => switchType(e.target.checked, "video")}
-              >
-                Video
-              </Checkbox>
-            </HStack>
-          </CheckboxGroup>
-        </Collapse>
+          <Collapse in={fileType?.type} animateOpacity>
+            <CheckboxGroup colorScheme="green">
+              <HStack w="full" spacing={2}>
+                <Checkbox
+                  size="sm"
+                  {...(fileType?.options?.includes("pdf")
+                    ? { defaultChecked: true }
+                    : {})}
+                  colorScheme="green"
+                  onChange={(e) => switchType(e.target.checked, "pdf")}
+                >
+                  PDF
+                </Checkbox>
+                <Checkbox
+                  size="sm"
+                  {...(fileType?.options?.includes("image")
+                    ? { defaultChecked: true }
+                    : {})}
+                  colorScheme="green"
+                  onChange={(e) => switchType(e.target.checked, "image")}
+                >
+                  Image
+                </Checkbox>
+                <Checkbox
+                  size="sm"
+                  {...(fileType?.options?.includes("video")
+                    ? { defaultChecked: true }
+                    : {})}
+                  colorScheme="green"
+                  onChange={(e) => switchType(e.target.checked, "video")}
+                >
+                  Video
+                </Checkbox>
+              </HStack>
+            </CheckboxGroup>
+          </Collapse>
+        </VStack>
         <VStack
           display="flex"
           justifyContent="start"
@@ -106,7 +106,7 @@ console.log(entries[0])
             <ListItem>Upload files under 5 MB.</ListItem>
           </UnorderedList>
         </VStack>
-      </VStack>
+      </Box>
     </Box>
   );
 };

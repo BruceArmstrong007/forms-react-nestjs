@@ -31,6 +31,20 @@ export const AdminRoutes = [
     },
   },
   {
+    path: "responses/:id",
+    loader: async ({ params }: any) => {
+      const form: any = await formState.getState();
+      const isExist = form.responses.find((response: any) => response.formID === params.id);
+      if (isExist) return true;
+      else throw new Error("Form Doesnt Exist");
+    },
+    errorElement: <Navigate to="/admin/dashboard" />,
+    async lazy() {
+      let { Response } = await import("./pages/response/Response");
+      return { Component: Response };
+    },
+  },
+  {
     path: "edit-profile",
     async lazy() {
       let { EditProfile } = await import("./pages/edit-profile/EditProfile");
