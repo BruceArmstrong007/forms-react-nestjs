@@ -24,12 +24,7 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 
-export const Sections = ({
-  index,
-  section,
-  updateSection,
-  deleteSection,
-}: any) => {
+export const Sections = ({ section, updateSection, deleteSection }: any) => {
   const [sectionData, setSectionData] = useState<SectionData>(section?.section);
   const [description, setDescription] = useState<DescriptionData>(
     section?.description
@@ -37,16 +32,12 @@ export const Sections = ({
   const [fields, setFields] = useState<FieldsData[]>(section?.fields);
 
   useEffect(() => {
-    updateSection(index, sectionData, description, fields);
+    updateSection(sectionData, description, fields);
   }, [sectionData, description, fields]);
 
   const updateData = (index: number, type: string, data: any[]) => {
-
-console.log('update');
-
     setFields((prev: any) => {
       let updatedFields = prev;
-
       updatedFields[index] = {
         index,
         type,
@@ -57,18 +48,13 @@ console.log('update');
   };
 
   const deleteData = async (index: number) => {
-console.log('delete');
-
     await setFields((prev: any) => {
-      let updatedFields = prev.filter((field: any)=> field.index !== index);
-      console.log(prev, index, updatedFields)
+      let updatedFields = prev.filter((field: any) => field.index !== index);
       return [...updatedFields];
     });
   };
 
   const addData = (data: FieldsData) => {
-console.log('add');
-
     setFields((prev: any) => [...prev, data]);
   };
 
@@ -124,14 +110,14 @@ console.log('add');
         >
           <HStack w="full">
             <Section section={sectionData} setSection={setSectionData} />
-            {index > 0 && (
+            {section.index > 0 && (
               <Tooltip
                 label="Delete Section"
                 placement="left"
                 closeOnClick={false}
               >
                 <IconButton
-                  onClick={() => deleteSection(index)}
+                  onClick={() => deleteSection(section?.index)}
                   aria-label="Delete Section"
                   variant="outline"
                   colorScheme="white"

@@ -55,7 +55,8 @@ export const Form = () => {
 
   const deleteSection = (index: any) => {
     setForm((prev: any) => {
-      let updatedFields = prev.sections.filter((field: any) => field.index === index);
+      let updatedFields = prev.sections.filter((field: any) => field.index !== index);
+      console.log(prev.sections, updatedFields, index);
       return { ...prev, sections: [...updatedFields] };
     });
   };
@@ -65,7 +66,7 @@ export const Form = () => {
       let updatedFields = prev.sections;
       updatedFields.push({
         ...initialFormData.sections[0],
-        index: form.sections.length,
+        index: prev.sections.length,
       });
       return { ...prev, sections: [...updatedFields] };
     });
