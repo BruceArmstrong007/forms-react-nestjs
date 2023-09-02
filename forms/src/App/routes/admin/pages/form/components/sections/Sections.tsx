@@ -38,10 +38,12 @@ export const Sections = ({
 
   useEffect(() => {
     updateSection(index, sectionData, description, fields);
-    
-  }, [index, sectionData, description, fields]);
+  }, [sectionData, description, fields]);
 
   const updateData = (index: number, type: string, data: any[]) => {
+
+console.log('update');
+
     setFields((prev: any) => {
       let updatedFields = prev;
 
@@ -55,16 +57,18 @@ export const Sections = ({
   };
 
   const deleteData = async (index: number) => {
+console.log('delete');
+
     await setFields((prev: any) => {
-      let updatedFields = prev;
-      updatedFields.splice(index, 1);
-      console.log(updatedFields);
-      
-      return updatedFields;
+      let updatedFields = prev.filter((field: any)=> field.index !== index);
+      console.log(prev, index, updatedFields)
+      return [...updatedFields];
     });
   };
 
   const addData = (data: FieldsData) => {
+console.log('add');
+
     setFields((prev: any) => [...prev, data]);
   };
 

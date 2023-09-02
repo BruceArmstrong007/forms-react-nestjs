@@ -8,30 +8,35 @@ import {
   Input,
   InputGroup,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InputLeftElement, InputRightElement } from "@chakra-ui/input";
 import { MdAdd, MdClose } from "react-icons/md";
 
 export const Radio = ({ entries, handleAnswer }: any) => {
   const [radioboxes, setRadioboxes] = useState(entries);
 
-  const handleInputChange = (event: any, index: number) => {
-    const updatedArray = [...radioboxes];
-    updatedArray[index] = event.target.value;
-    setRadioboxes(updatedArray);
+  useEffect(() => {
     handleAnswer(radioboxes);
+  }, [radioboxes]);
+
+  const handleInputChange = (event: any, index: number) => {
+    setRadioboxes((prev: any) => {
+      const updatedArray = [...radioboxes];
+      updatedArray[index] = event.target.value;
+      return updatedArray;
+    });
   };
 
   const removeElement = (index: number) => {
-    const updatedArray = [...radioboxes];
-    updatedArray.splice(index, 1);
-    setRadioboxes(updatedArray);
-    handleAnswer(radioboxes);
+    setRadioboxes((prev: any) => {
+      let updateArray = prev;
+      updateArray.splice(index, 1);
+      return updateArray;
+    });
   };
 
   const addElement = () => {
-    setRadioboxes([...radioboxes, "Option " + (radioboxes.length + 1)]);
-    handleAnswer(radioboxes);
+    setRadioboxes((prev: any) => [...prev, "Option " + (prev.length + 1)]);
   };
 
   const inputFields = radioboxes.map((value: any, index: any) => (

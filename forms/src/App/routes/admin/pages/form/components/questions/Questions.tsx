@@ -35,7 +35,7 @@ export const Questions = ({ value, getData, deleteData }: any) => {
   useEffect(() => {
     const data = [question, answer];
     getData(value?.index, value?.type, data);
-  }, [value?.index, value?.type, question, answer]);
+  }, [question, answer]);
 
   const handleAnswer = (entries: any[]) => {
     setAnswer((prev: any) => {

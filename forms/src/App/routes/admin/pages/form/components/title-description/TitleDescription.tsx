@@ -20,7 +20,7 @@ export const TitleDescription = ({ value, getData, deleteData }: any) => {
   useEffect(() => {
     const data = [title, description];
     getData(value?.index, value?.type, data);
-  }, [title, description,value?.index, value?.type]);
+  }, [title, description]);
 
   return (
     <Box w="full">

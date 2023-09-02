@@ -55,8 +55,7 @@ export const Form = () => {
 
   const deleteSection = (index: any) => {
     setForm((prev: any) => {
-      let updatedFields = prev.sections;
-      updatedFields.splice(index, 1);
+      let updatedFields = prev.sections.filter((field: any) => field.index === index);
       return { ...prev, sections: [...updatedFields] };
     });
   };
