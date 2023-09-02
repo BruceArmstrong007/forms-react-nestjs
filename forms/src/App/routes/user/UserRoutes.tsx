@@ -8,7 +8,7 @@ export const UserRoutes = [
     loader: async ({ params }: any) => {
       await delay(300);
       let form: any = await submitState.getState();
-      await form.isSubmited();
+      await form.isSubmited(params.id);
       if (!form?.form) {
         await form.getForms(params.id);
         form = await submitState.getState();

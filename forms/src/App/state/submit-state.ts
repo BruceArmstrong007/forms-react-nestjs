@@ -1,5 +1,10 @@
 import { create } from "zustand";
-import { deleteFile, getForms, saveForm, uploadFile } from "../api/submit-request";
+import {
+  deleteFile,
+  getForms,
+  saveForm,
+  uploadFile,
+} from "../api/submit-request";
 
 export const submitState = create((set, get) => ({
   form: null,
@@ -11,20 +16,20 @@ export const submitState = create((set, get) => ({
     }
     return response;
   },
-  isSubmited: async () => {
-    const stored = localStorage.getItem("form");
+  isSubmited: async (formId: any) => {
+    const stored = localStorage.getItem(formId);
     if (!stored) {
-      localStorage.setItem("form", JSON.stringify({ submit: false }));
+      localStorage.setItem(formId, "false");
       return false;
     }
-    const form = JSON.parse(stored);
-    set((state: any) => ({ ...state, submit: form.submit }));
-    return form.submit;
+    const submitted = JSON.parse(stored);
+    set((state: any) => ({ ...state, submit: submitted }));
+    return submitted;
   },
   saveForm: async (values: any) => {
     const response = await saveForm(values);
     if (response && !response?.statusCode) {
-      localStorage.setItem("form", JSON.stringify({ submit: true }));
+      localStorage.setItem(values?.formID, JSON.stringify("true"));
       set((state: any) => ({ ...state, submit: true }));
     }
     return response;
