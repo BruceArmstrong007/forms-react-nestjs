@@ -12,7 +12,7 @@ import {
   Text,
   UnorderedList,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface FileType {
   type: boolean;
@@ -23,18 +23,25 @@ export const File = ({ entries, handleAnswer }: any) => {
   const [fileType, setFileType] = useState<FileType>(entries[0]);
 
   const fileTypeRequired = (required: boolean) => {
-    setFileType({ ...fileType, type: required });
+    setFileType((prev: any) => {
+      return { ...prev, type: required };
+    });
   };
 
-  const switchType = (type: boolean, field: string) => {
-    let options: string[] = fileType.options ? fileType.options : [];
-    if (type) {
-      if (!options?.includes(field)) options.push(field);
-    } else {
-      options = options?.filter((option) => option !== field);
-    }
-    setFileType({ ...fileType, options });
+  useEffect(() => {
     handleAnswer([fileType]);
+  }, [fileType]);
+
+  const switchType = (type: boolean, field: string) => {
+    setFileType((prev: any) => {
+      let options: string[] = prev.options ? prev.options : [];
+      if (type) {
+        if (!options?.includes(field)) options.push(field);
+      } else {
+        options = options?.filter((option) => option !== field);
+      }
+      return { ...prev, options };
+    });
   };
 
   return (
@@ -60,7 +67,7 @@ export const File = ({ entries, handleAnswer }: any) => {
           <Collapse in={fileType?.type} animateOpacity>
             <CheckboxGroup colorScheme="green">
               <HStack w="full" spacing={2}>
-              <Checkbox
+                <Checkbox
                   size="sm"
                   {...(fileType?.options?.includes("txt")
                     ? { defaultChecked: true }
@@ -70,7 +77,7 @@ export const File = ({ entries, handleAnswer }: any) => {
                 >
                   TXT (Text)
                 </Checkbox>
-              <Checkbox
+                <Checkbox
                   size="sm"
                   {...(fileType?.options?.includes("csv")
                     ? { defaultChecked: true }

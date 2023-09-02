@@ -4,11 +4,12 @@ import ReactPlayer from "react-player";
 
 export const Video = ({ video, setVideo }: any) => {
   const urlChange = (url: string) => {
-    setVideo({
-      ...video,
-      url: url,
+    setVideo((prev: any) => {
+      return {
+        ...prev,
+        url: url,
+      };
     });
-    console.log(video, url);
   };
   return (
     <Box w="full">

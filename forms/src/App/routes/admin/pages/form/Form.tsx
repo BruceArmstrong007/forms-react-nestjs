@@ -5,7 +5,12 @@ import { useToast } from "@chakra-ui/react";
 import { formState } from "../../../../state/form-state";
 import { Options } from "./components/options/Options";
 import { useParams } from "react-router-dom";
-import { DescriptionData, FieldsData, FormData, SectionData } from "../../../../../shared/utils/interface";
+import {
+  DescriptionData,
+  FieldsData,
+  FormData,
+  SectionData,
+} from "../../../../../shared/utils/interface";
 
 const initialSectionState = {
   name: "Enter Section",
@@ -49,18 +54,22 @@ export const Form = () => {
   );
 
   const deleteSection = (index: any) => {
-    let updatedFields = form.sections;
-    updatedFields.splice(index, 1);
-    setForm({ ...form, sections: [...updatedFields] });
+    setForm((prev: any) => {
+      let updatedFields = prev.sections;
+      updatedFields.splice(index, 1);
+      return { ...prev, sections: [...updatedFields] };
+    });
   };
 
   const addSection = () => {
-    let updatedFields = form.sections;
-    updatedFields.push({
-      ...initialFormData.sections[0],
-      index: form.sections.length,
+    setForm((prev: any) => {
+      let updatedFields = prev.sections;
+      updatedFields.push({
+        ...initialFormData.sections[0],
+        index: form.sections.length,
+      });
+      return { ...prev, sections: [...updatedFields] };
     });
-    setForm({ ...form, sections: [...updatedFields] });
   };
 
   const updateSection = (
@@ -69,15 +78,16 @@ export const Form = () => {
     description: DescriptionData,
     fields: FieldsData[]
   ) => {
-    let updatedFields = form.sections;
-
-    updatedFields[index] = {
-      index,
-      section: sectionData,
-      description,
-      fields,
-    };
-    setForm({ ...form, sections: updatedFields });
+    setForm((prev: any) => {
+      let updatedFields = prev.sections;
+      prev[index] = {
+        index,
+        section: sectionData,
+        description,
+        fields,
+      };
+      return { ...prev, sections: [...updatedFields] };
+    });
   };
 
   const saveForm = async () => {

@@ -13,7 +13,7 @@ export const CheckBox = ({ entries, handleAnswer, required }: any) => {
   const isError = required && input === "";
   useEffect(() => {
     handleAnswer(input)
-  },[]);
+  },[input]);
   const inputFields = entries.map((value: any, index: any) => (
     <Checkbox key={index} value={value}>
       {value}
@@ -32,7 +32,6 @@ export const CheckBox = ({ entries, handleAnswer, required }: any) => {
         <FormControl isRequired={required} isInvalid={isError}>
           <CheckboxGroup
           onChange={(e: any) => {
-              handleAnswer(e);
               setInput(e);
             }}
             colorScheme="green"

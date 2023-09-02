@@ -13,7 +13,7 @@ export const Sections = ({ data, index, updateData }: any) => {
 
   useEffect(() => {
     updateData({ index, questions });
-  }, [index, questions, updateData]);
+  }, [index, questions]);
 
   const getData = (value: any) => {
     setQuestions((prev) => [

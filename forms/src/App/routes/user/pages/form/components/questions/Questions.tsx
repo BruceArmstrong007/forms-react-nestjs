@@ -29,7 +29,7 @@ export const Questions = ({ value, index, getData }: any) => {
 
   useEffect(() => {
     getData(answer);
-  }, [answer, getData]);
+  }, [answer]);
 
   const handleAnswer = (result: any) => {
     if (Array.isArray(result)) setAnswer({ ...answer, answer: [...result] });

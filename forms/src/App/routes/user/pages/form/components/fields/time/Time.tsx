@@ -6,7 +6,7 @@ export const Time = ({ handleAnswer, required }: any) => {
   const isError = required && input === "";
   useEffect(() => {
     handleAnswer(input)
-  },[]);
+  },[input]);
   return (
     <Box w="full">
       <FormControl isRequired={required} isInvalid={isError}>
@@ -17,7 +17,6 @@ export const Time = ({ handleAnswer, required }: any) => {
           required={required}
           onChange={(e) => {
             setInput(e.target.value);
-            handleAnswer(e.target.value);
           }}
         />
         {isError && <FormErrorMessage>Required.</FormErrorMessage>}

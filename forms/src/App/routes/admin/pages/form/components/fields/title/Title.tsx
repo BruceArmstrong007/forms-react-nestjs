@@ -20,33 +20,21 @@ export const Title = ({ title, setTitle }: any) => {
   // };
 
   const handleClick = (data: any) => {
-    if (data === "bold") {
-      setTitle({
-        ...title,
+    setTitle((prev: any) => {
+      return {
+        ...prev,
         options: {
-          ...title.options,
-          bold: !title.options.bold,
+          ...prev.options,
+          [data]: !prev.options[data],
         },
-      });
-    }
-    if (data === "italic") {
-      setTitle({
-        ...title,
-        options: {
-          ...title.options,
-          italic: !title.options.italic,
-        },
-      });
-    }
-    if (data === "underline") {
-      setTitle({
-        ...title,
-        options: {
-          ...title.options,
-          underline: !title.options.underline,
-        },
-      });
-    }
+      };
+    });
+  };
+
+  const update = (e: string) => {
+    setTitle((prev: any) => {
+      return { ...prev, name: e };
+    });
   };
 
   return (
@@ -55,12 +43,7 @@ export const Title = ({ title, setTitle }: any) => {
       onMouseEnter={() => setEditing(true)}
       onMouseLeave={() => setEditing(false)}
     >
-      <Editable
-        defaultValue={title.name}
-        onChange={(e) => {
-          setTitle({ ...title, name: e });
-        }}
-      >
+      <Editable defaultValue={title.name} onChange={update}>
         <EditablePreview
           w="full"
           fontSize="xl"

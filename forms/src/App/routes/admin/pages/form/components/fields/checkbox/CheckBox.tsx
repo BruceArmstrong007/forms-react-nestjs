@@ -8,30 +8,38 @@ import {
   Input,
   InputGroup,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InputLeftElement, InputRightElement } from "@chakra-ui/input";
 import { MdAdd, MdClose } from "react-icons/md";
 
 export const CheckBox = ({ entries, handleAnswer }: any) => {
   const [checkboxes, setCheckboxes] = useState(entries);
 
-  const handleInputChange = (event: any, index: number) => {
-    const updatedArray = [...checkboxes];
-    updatedArray[index] = event.target.value;
-    setCheckboxes(updatedArray);
+  useEffect(() => {
     handleAnswer(checkboxes);
+  }, [checkboxes]);
+
+  const handleInputChange = (event: any, index: number) => {
+    setCheckboxes((prev: any) => {
+      const updatedArray = [...prev];
+      updatedArray[index] = event.target.value;
+      return updatedArray;
+    });
   };
 
   const removeElement = (index: number) => {
-    const updatedArray = [...checkboxes];
-    updatedArray.splice(index, 1);
-    setCheckboxes(updatedArray);
-    handleAnswer(checkboxes);
+    setCheckboxes((prev: any) => {
+      let updatedArray = [...prev];
+      updatedArray.splice(index, 1);
+      return updatedArray;
+    });
   };
 
   const addElement = () => {
-    setCheckboxes([...checkboxes, "Option " +(checkboxes.length + 1)]);
-    handleAnswer(checkboxes)
+    setCheckboxes((prev: any) => [
+      ...prev,
+      "Option " + (checkboxes.length + 1),
+    ]);
   };
 
   const inputFields = checkboxes.map((value: any, index: any) => (

@@ -35,14 +35,18 @@ export const Questions = ({ value, getData, deleteData }: any) => {
   useEffect(() => {
     const data = [question, answer];
     getData(value?.index, value?.type, data);
-  }, [value?.index, value?.type, question, answer, getData]);
+  }, [value?.index, value?.type, question, answer]);
 
   const handleAnswer = (entries: any[]) => {
-    setAnswer({ ...answer, entries: entries });
+    setAnswer((prev: any) => {
+      return { ...prev, entries: entries };
+    });
   };
 
   const setRequired = (required: boolean) => {
-    setAnswer({ ...answer, required });
+    setAnswer((prev: any) => {
+      return { ...prev, required };
+    });
   };
 
   return (

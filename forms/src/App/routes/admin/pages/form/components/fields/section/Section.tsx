@@ -20,33 +20,21 @@ export const Section = ({ section, setSection }: any) => {
   // };
 
   const handleClick = (data: any) => {
-    if (data === "bold") {
-      setSection({
-        ...section,
+    setSection((prev: any) => {
+      return {
+        ...prev,
         options: {
-          ...section.options,
-          bold: !section.options.bold,
+          ...prev.options,
+          [data]: !prev.options[data],
         },
-      });
-    }
-    if (data === "italic") {
-      setSection({
-        ...section,
-        options: {
-          ...section.options,
-          italic: !section.options.italic,
-        },
-      });
-    }
-    if (data === "underline") {
-      setSection({
-        ...section,
-        options: {
-          ...section.options,
-          underline: !section.options.underline,
-        },
-      });
-    }
+      };
+    });
+  };
+
+  const update = (e: string) => {
+    setSection((prev: any) => {
+      return { ...prev, name: e };
+    });
   };
 
   return (
@@ -55,12 +43,7 @@ export const Section = ({ section, setSection }: any) => {
       onMouseEnter={() => setEditing(true)}
       onMouseLeave={() => setEditing(false)}
     >
-      <Editable
-        defaultValue={section.name}
-        onChange={(e) => {
-          setSection({ ...section, name: e });
-        }}
-      >
+      <Editable defaultValue={section.name} onChange={update}>
         <EditablePreview
           w="full"
           fontSize="2xl"

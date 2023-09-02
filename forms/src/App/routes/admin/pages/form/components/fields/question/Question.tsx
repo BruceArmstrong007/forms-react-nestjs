@@ -20,33 +20,15 @@ export const Question = ({ question, setQuestion }: any) => {
   // };
 
   const handleClick = (data: any) => {
-    if (data === "bold") {
-      setQuestion({
-        ...question,
+    setQuestion((prev: any) => {
+      return {
+        ...prev,
         options: {
-          ...question.options,
-          bold: !question.options.bold,
+          ...prev.options,
+          [data]: !prev.options[data],
         },
-      });
-    }
-    if (data === "italic") {
-      setQuestion({
-        ...question,
-        options: {
-          ...question.options,
-          italic: !question.options.italic,
-        },
-      });
-    }
-    if (data === "underline") {
-      setQuestion({
-        ...question,
-        options: {
-          ...question.options,
-          underline: !question.options.underline,
-        },
-      });
-    }
+      };
+    });
   };
 
   return (
@@ -58,7 +40,9 @@ export const Question = ({ question, setQuestion }: any) => {
       <Editable
         defaultValue={question.name}
         onChange={(e) => {
-          setQuestion({ ...question, name: e });
+          setQuestion((prev: any) => {
+            return { ...prev, name: e };
+          });
         }}
       >
         <EditablePreview

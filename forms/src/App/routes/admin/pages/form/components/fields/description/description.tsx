@@ -20,30 +20,18 @@ export const Description = ({ description, setDescription }: any) => {
   // };
 
   const handleClick = (data: any) => {
-    if (data === "bold") {
-      setDescription({
-        ...description,
-        options: { ...description.options, bold: !description.options.bold },
-      });
-    }
-    if (data === "italic") {
-      setDescription({
-        ...description,
-        options: {
-          ...description.options,
-          italic: !description.options.italic,
-        },
-      });
-    }
-    if (data === "underline") {
-      setDescription({
-        ...description,
-        options: {
-          ...description.options,
-          underline: !description.options.underline,
-        },
-      });
-    }
+    setDescription((prev: any) => {
+      return {
+        ...prev,
+        options: { ...prev.options, [data]: !prev.options[data] },
+      };
+    });
+  };
+
+  const update = (e: string) => {
+    setDescription((prev: any) => {
+      return { ...prev, name: e };
+    });
   };
 
   return (
@@ -52,12 +40,7 @@ export const Description = ({ description, setDescription }: any) => {
       onMouseEnter={() => setEditing(true)}
       onMouseLeave={() => setEditing(false)}
     >
-      <Editable
-        defaultValue={description.name}
-        onChange={(e) => {
-          setDescription({ ...description, name: e });
-        }}
-      >
+      <Editable defaultValue={description.name} onChange={update}>
         <EditablePreview
           w="full"
           fontSize="md"

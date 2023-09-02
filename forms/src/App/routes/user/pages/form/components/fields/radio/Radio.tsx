@@ -13,7 +13,7 @@ export const Radio = ({ entries, handleAnswer, required }: any) => {
   const isError = required && input === "";
   useEffect(() => {
     handleAnswer(input)
-  },[]);
+  },[input]);
   const inputFields = entries?.map((value: any, index: any) => (
     <RadioBox key={index} value={value}>
       {value}
@@ -35,7 +35,6 @@ export const Radio = ({ entries, handleAnswer, required }: any) => {
             value={input}
             onChange={(e) => {
               setInput(e);
-              handleAnswer(e);
             }}
             colorScheme="green"
           >

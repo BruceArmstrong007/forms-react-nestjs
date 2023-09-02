@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
-import { DescriptionData, FieldsData, Options, SectionData } from "../../../../../../../shared/utils/interface";
+import {
+  DescriptionData,
+  FieldsData,
+  SectionData,
+} from "../../../../../../../shared/utils/interface";
 import { HStack, VStack } from "@chakra-ui/layout";
 import { IconButton } from "@chakra-ui/button";
 import Icon from "@chakra-ui/icon";
@@ -34,27 +38,34 @@ export const Sections = ({
 
   useEffect(() => {
     updateSection(index, sectionData, description, fields);
-  }, [index, sectionData, description, fields, updateSection]);
+    
+  }, [index, sectionData, description, fields]);
 
   const updateData = (index: number, type: string, data: any[]) => {
-    let updatedFields = fields;
+    setFields((prev: any) => {
+      let updatedFields = prev;
 
-    updatedFields[index] = {
-      index,
-      type,
-      data,
-    };
-    setFields(updatedFields);
+      updatedFields[index] = {
+        index,
+        type,
+        data,
+      };
+      return updatedFields;
+    });
   };
 
   const deleteData = async (index: number) => {
-    let updatedFields = fields.filter((field:any) => field.index !== index);
-    await setFields(updatedFields);
-
+    await setFields((prev: any) => {
+      let updatedFields = prev;
+      updatedFields.splice(index, 1);
+      console.log(updatedFields);
+      
+      return updatedFields;
+    });
   };
 
   const addData = (data: FieldsData) => {
-    setFields([...fields, data]);
+    setFields((prev: any) => [...prev, data]);
   };
 
   const renderFields = fields.map((value, index) => {

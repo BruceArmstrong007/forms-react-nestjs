@@ -13,7 +13,6 @@ import { MdDelete } from "react-icons/md";
 import { FiFile } from "react-icons/fi";
 import { formState } from "../../../../../../../state/form-state";
 import { UploadOptions } from "../../../../../../../../shared/utils/enums";
-import { FormControl, FormHelperText } from "@chakra-ui/form-control";
 
 export const Controls = ({ urlChange, isControls, url }: any) => {
   const [file, setFile] = useState<any>({ name: "" });

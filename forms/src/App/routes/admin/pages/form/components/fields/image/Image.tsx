@@ -4,9 +4,11 @@ import { Controls } from "./Controls";
 
 export const Image = ({ image, setImage }: any) => {
   const urlChange = (url: string) => {
-    setImage({
-      ...image,
-      url: url,
+    setImage((prev: any) => {
+      return {
+        ...prev,
+        url: url,
+      };
     });
   };
   return (

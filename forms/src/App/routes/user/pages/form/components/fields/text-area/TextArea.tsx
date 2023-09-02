@@ -6,7 +6,7 @@ export const TextArea = ({ handleAnswer, required }: any) => {
   const isError = required && input === "";
   useEffect(() => {
     handleAnswer(input)
-  },[]);
+  },[input]);
   return (
     <Box w="full">
       <FormControl isRequired={required} isInvalid={isError}>
@@ -16,7 +16,7 @@ export const TextArea = ({ handleAnswer, required }: any) => {
           required={required}
           value={input}
           variant="flushed"
-          onChange={(e) => {setInput(e.target.value);handleAnswer(e.target.value)}}
+          onChange={(e) => {setInput(e.target.value);}}
         />
         {isError && <FormErrorMessage>Required.</FormErrorMessage>}
 

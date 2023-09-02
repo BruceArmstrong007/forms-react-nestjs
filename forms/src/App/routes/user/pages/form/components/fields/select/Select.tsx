@@ -7,7 +7,7 @@ export const Select = ({ entries, handleAnswer, required }: any) => {
   const isError = required && input === "";
   useEffect(() => {
     handleAnswer(input)
-  },[]);
+  },[input]);
   const inputFields = entries?.map((value: any, index: any) => (
     <option key={index} value={value}>
       {value}
@@ -28,7 +28,6 @@ export const Select = ({ entries, handleAnswer, required }: any) => {
             required={required}
             onChange={(e) => {
               setInput(e.target.value);
-              handleAnswer(e.target.value);
             }}
             variant="flushed"
             value={input}
