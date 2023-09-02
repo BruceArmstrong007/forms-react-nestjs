@@ -15,5 +15,6 @@ import { FirebaseModule } from '@app/common';
     FirebaseModule,
     MongooseModule.forFeature([{ name: Submit.name, schema: SubmitSchema }]),
   ],
+  exports: [],
 })
 export class SubmitsModule {}

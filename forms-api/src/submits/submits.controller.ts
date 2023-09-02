@@ -8,7 +8,6 @@ import {
   ParseFilePipe,
   Post,
   Put,
-  Query,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -16,8 +15,9 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { SubmitsService } from './submits.service';
 import { SubmitsRequest } from './dto/request/submits.request';
-import { JwtAuthGuard } from '@app/common';
-import { FileRequest } from './dto/request/file.request';
+import { CurrentUser, JwtAuthGuard } from '@app/common';
+import { User } from 'src/user/database/model/user.model';
+import { Submit } from './database/model/submits.model';
 
 @Controller('submits')
 export class SubmitsController {
@@ -54,5 +54,17 @@ export class SubmitsController {
   @Delete('delete-file/:name')
   async deleteFile(@Param('name') fileName: string): Promise<object> {
     return await this.submitsService.deleteFile(fileName);
+  }
+ 
+  @UseGuards(JwtAuthGuard)
+  @Get('responses')
+  async getResponses(@CurrentUser() user: User): Promise<Submit[] | null> {
+    return await this.submitsService.getResponses(user?.username);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('delete-response/:id')
+  async deleteResponse(@Param('id') responseID: string): Promise<object> {
+    return await this.submitsService.deleteResponse(responseID);
   }
 }

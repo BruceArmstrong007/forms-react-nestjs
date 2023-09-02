@@ -129,7 +129,7 @@ export const Dashboard = () => {
     window.location.href = mailtoLink;
   };
 
-  const viewResponses = (formID: string) => {
+  const viewResponses = async (formID: string) => {
     navigate("/admin/responses/" + formID);
   };
 

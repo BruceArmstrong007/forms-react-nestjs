@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { FormsRepository } from './database/repository/forms.repository';
 import { Form } from './database/model/forms.model';
 import { CreateUpdateFormRequest } from './dto/request/forms.request';
-import { Types } from 'mongoose';
 
 @Injectable()
 export class FormsService {
@@ -16,7 +15,6 @@ export class FormsService {
     data: CreateUpdateFormRequest,
     username: string,
   ): Promise<object> {
-
     const form = {
       name: data?.name,
       sections: data?.sections,
@@ -28,7 +26,7 @@ export class FormsService {
     } else {
       formID = (await this.formsRepository.createForm(form))?._id;
     }
-    return { message: 'Operation Successful.', formID : formID };
+    return { message: 'Operation Successful.', formID: formID };
   }
 
   async deleteForm(id: string): Promise<object> {

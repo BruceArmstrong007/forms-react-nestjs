@@ -53,6 +53,7 @@ export const router = createBrowserRouter([
 
           const form: any = await formState.getState();
           if (form.forms.length === 0) await form.getForms();
+          if (form.responses.length === 0) await form.getResponses();
           else return await admin.getProfile();
         },
         errorElement: <Navigate to="/auth/login" />,

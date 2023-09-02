@@ -113,3 +113,48 @@ export async function deleteForm(formID: string) {
   }
   return result;
 }
+
+
+export async function getResponses() {
+  const auth: any = authState.getState();
+  const token = auth.token.accessToken;
+  const endPoint = "/submits/responses";
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+  };
+  let result = null;
+  try {
+    result = await fetch(serverURL + endPoint, requestOptions);
+    result = await result.json();
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+  return result;
+}
+
+
+export async function deleteResponse(responseID: string) {
+  const auth: any = authState.getState();
+  const token = auth.token.accessToken;
+  const endPoint = "/submits/delete-response/" + responseID;
+  const requestOptions = {
+    method: "DELETE",
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  let result = null;
+  try {
+    result = await fetch(serverURL + endPoint, requestOptions);
+    result = await result.json();
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+  return result;
+}

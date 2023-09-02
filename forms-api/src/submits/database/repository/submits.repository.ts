@@ -42,4 +42,12 @@ export class SubmitsRepository {
     const fileRef = ref(this.firebaseStorage, 'form/' + fileName);
     await deleteObject(fileRef);
   }
+
+  async getResponsesFromAuthorID(authorID: string): Promise<Submit[] | null> {
+    return await this.submitModel.find({ authorID: authorID }).exec();
+  }
+
+  async deleteResponse(id: string) {
+    await this.submitModel.findByIdAndDelete(id).exec();
+  }
 }

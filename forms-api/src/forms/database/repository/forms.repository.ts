@@ -73,4 +73,5 @@ export class FormsRepository {
     const fileRef = ref(this.firebaseStorage, 'submits/' + fileName);
     await deleteObject(fileRef);
   }
+
 }

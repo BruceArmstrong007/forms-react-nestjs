@@ -13,7 +13,7 @@ import { UserModule } from 'src/user/user.module';
   imports: [
     MongooseModule.forFeature([{ name: Form.name, schema: FormSchema }]),
     FirebaseModule,
-    UserModule
+    UserModule,
   ],
   exports: [FormsService, FormsRepository],
 })
