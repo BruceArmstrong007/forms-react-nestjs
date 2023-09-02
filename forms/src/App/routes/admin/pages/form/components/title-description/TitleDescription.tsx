@@ -14,14 +14,13 @@ interface Data {
 }
 
 export const TitleDescription = ({ value, getData, deleteData }: any) => {
-  
   const [title, setTitle] = useState<Data>(value?.data[0]);
   const [description, setDescription] = useState<Data>(value?.data[1]);
 
   useEffect(() => {
     const data = [title, description];
     getData(value?.index, value?.type, data);
-  }, [title, description, value, getData]);
+  }, [title, description, value?.index, value?.type, getData]);
 
   return (
     <Box w="full">

@@ -22,7 +22,7 @@ export const TitleVideo = ({ value, getData, deleteData }: any) => {
   useEffect(() => {
     const data = [title, video];
     getData(value?.index, value?.type, data);
-  }, [value, title, video, getData]);
+  }, [value?.index, value?.type, title, video, getData]);
 
   return (
     <Box w="full">

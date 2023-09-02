@@ -23,7 +23,7 @@ export const TitleImage = ({ value, getData, deleteData }: any) => {
   useEffect(() => {
     const data = [title, image];
     getData(value?.index, value?.type, data);
-  }, [value, title, image, getData]);
+  }, [value?.index, value?.type, title, image, getData]);
 
   return (
     <Box w="full">
