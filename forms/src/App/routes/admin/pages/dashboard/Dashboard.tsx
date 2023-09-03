@@ -8,30 +8,16 @@ import {
   CardFooter,
   useToast,
   IconButton,
-  Stack,
-  Input,
   ButtonGroup,
-  Button,
-  FormLabel,
-  FormHelperText,
-  FocusLock,
   VStack,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import Icon from "@chakra-ui/icon";
-import { MdAdd, MdDelete, MdShare } from "react-icons/md";
-import { Tooltip, FormControl } from "@chakra-ui/react";
-import { CLIENT_URL } from "../../../../environment";
-import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverArrow,
-  useDisclosure,
-  PopoverCloseButton,
-} from "@chakra-ui/react";
-import { useRef, useState } from "react";
+import { MdAdd, MdDelete } from "react-icons/md";
+import { Tooltip } from "@chakra-ui/react";
+
 import { FaWpforms } from "react-icons/fa";
+import { ShareButton } from "./components/share-button/ShareButton";
 
 const initialSectionState = {
   name: "Enter Section",
@@ -67,12 +53,9 @@ const initialFormData = {
 };
 
 export const Dashboard = () => {
-  const { onOpen, onClose, isOpen } = useDisclosure();
-  const firstFieldRef = useRef(null);
   const form: any = formState((state: any) => state);
   const navigate = useNavigate();
   const toast = useToast();
-  const [email, setEmail] = useState<string>("");
 
   const openForm = (formID: string) => {
     navigate("/admin/forms/" + formID);
@@ -115,19 +98,7 @@ export const Dashboard = () => {
     await form.getForms();
   };
 
-  const shareForm = (formID: string) => {
-    const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(
-      "Hey Checkout this new Form!"
-    )}&body=${encodeURIComponent(
-      "I have built a amazing form, check it out! " +
-        CLIENT_URL +
-        "/user/form/" +
-        formID
-    )}`;
 
-    // Open the user's default email client with the pre-filled content
-    window.location.href = mailtoLink;
-  };
 
   const viewResponses = async (formID: string) => {
     navigate("/admin/responses/" + formID);
@@ -162,76 +133,7 @@ export const Dashboard = () => {
             </Tooltip>
             <Box w="full" display="flex" justifyContent="end" alignItems="end">
               <ButtonGroup>
-                <Popover
-                  isOpen={isOpen}
-                  initialFocusRef={firstFieldRef}
-                  onOpen={onOpen}
-                  onClose={onClose}
-                  placement="right"
-                  closeOnBlur={false}
-                >
-                  <PopoverTrigger>
-                    <IconButton
-                      size="xs"
-                      aria-label="Share Form"
-                      variant="outline"
-                      colorScheme="white"
-                      _hover={{
-                        backgroundColor: "blue",
-                        border: "transparent",
-                      }}
-                      isRound={true}
-                    >
-                      <Icon as={MdShare}></Icon>
-                    </IconButton>
-                  </PopoverTrigger>
-                  <PopoverContent p={5}>
-                    <FocusLock persistentFocus={false}>
-                      <PopoverArrow />
-                      <PopoverCloseButton />
-
-                      <Stack spacing={4}>
-                        <FormControl>
-                          <FormLabel>E-mail Recipients</FormLabel>
-                          <Input
-                            size="xs"
-                            defaultValue={email}
-                            ref={firstFieldRef}
-                            onChange={(e) => setEmail(e.target.value)}
-                          />
-                          <FormHelperText fontSize="xs">
-                            Enter Email ids followed by ',' to distingush them
-                          </FormHelperText>
-                        </FormControl>
-                        {/* <FormControl>
-                          <FormLabel>Subject</FormLabel>
-                          <Input
-                            size="xs"
-                            defaultValue={email}
-                            ref={firstFieldRef}
-                            onChange={(e) => setEmail(e.target.value)}
-                          />
-                        </FormControl> */}
-                        <ButtonGroup
-                          w="full"
-                          display="flex"
-                          justifyContent="space-between"
-                        >
-                          <Button variant="outline" size="xs" onClick={onClose}>
-                            Cancel
-                          </Button>
-                          <Button
-                            size="xs"
-                            onClick={() => shareForm(data?._id)}
-                            colorScheme="teal"
-                          >
-                            Share
-                          </Button>
-                        </ButtonGroup>
-                      </Stack>
-                    </FocusLock>
-                  </PopoverContent>
-                </Popover>
+              <ShareButton id={data?._id} />
                 <Tooltip label="Delete Form" placement="bottom">
                   <IconButton
                     size="xs"

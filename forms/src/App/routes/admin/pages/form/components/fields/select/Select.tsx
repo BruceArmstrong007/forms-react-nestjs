@@ -13,7 +13,7 @@ export const Select = ({ entries, handleAnswer }: any) => {
 
   const handleInputChange = (event: any, index: number) => {
     setDropboxes((prev: any) => {
-      const updatedArray = prev;
+      const updatedArray = [...prev];
       updatedArray[index] = event.target.value;
       return updatedArray;
     });

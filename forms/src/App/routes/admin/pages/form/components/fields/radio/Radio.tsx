@@ -21,7 +21,7 @@ export const Radio = ({ entries, handleAnswer }: any) => {
 
   const handleInputChange = (event: any, index: number) => {
     setRadioboxes((prev: any) => {
-      const updatedArray = [...radioboxes];
+      const updatedArray = [...prev];
       updatedArray[index] = event.target.value;
       return updatedArray;
     });

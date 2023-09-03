@@ -21,7 +21,7 @@ export const Form = () => {
   const saveForm = async () => {
     for (let i = 0; i < sections.length; i++) {
       const exist = sections[i]?.questions?.find(
-        (question: any) => question.required == true && !question.answer
+        (question: any) => question.required === true && !question.answer
       );
       if (exist) {
         toast({
