@@ -23,6 +23,8 @@ import { MongoDBModule } from '@app/common';
         FIREBASE_API_KEY: Joi.string().required(),
         FIREBASE_PROJECT_ID: Joi.string().required(),
         FIREBASE_STORAGE_BUCKET: Joi.string().required(),
+        CLIENT_URI1: Joi.string().required(),
+        CLIENT_URI2: Joi.string().required(),
       }),
     }),
     AuthModule,
