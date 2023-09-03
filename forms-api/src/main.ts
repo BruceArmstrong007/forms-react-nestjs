@@ -6,7 +6,11 @@ import * as bodyParser from 'body-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors();
+  const configService = await app.get(ConfigService);
+
+  app.enableCors({
+    origin: configService.get('CLIENT_URI'),
+  });
   app.use(bodyParser.json());
   app.useGlobalPipes(
     new ValidationPipe({
@@ -14,7 +18,6 @@ async function bootstrap() {
     }),
   );
 
-  const configService = app.get(ConfigService);
   await app.listen(configService.get('PORT'));
 }
 bootstrap();
