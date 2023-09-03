@@ -7,7 +7,7 @@ u can fill the shared form even if you dont want to signup
 
 # Note
  React (functional) - My very first time </br>
- In nestjs server, .env should be created with valid variables, (check app.controller.ts to know about those variables)
+ In nestjs server, .env should be created with valid variables, (check app.module.ts to know about those variables)
 
 # Prerequisites
 Make sure you have npm & node installed in your local machine  </br>
