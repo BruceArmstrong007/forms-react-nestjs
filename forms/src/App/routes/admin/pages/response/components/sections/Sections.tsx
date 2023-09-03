@@ -1,4 +1,4 @@
-import { Box, Text } from "@chakra-ui/layout";
+import { Box } from "@chakra-ui/layout";
 import { Questions } from "../questions/Questions";
 
 export const Sections = ({ sections }: any) => {
