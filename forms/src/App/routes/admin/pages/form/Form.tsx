@@ -1,6 +1,6 @@
 import { Box, VStack } from "@chakra-ui/layout";
 import { Sections } from "./components/sections/Sections";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useToast } from "@chakra-ui/react";
 import { formState } from "../../../../state/form-state";
 import { Options } from "./components/options/Options";
@@ -80,7 +80,7 @@ export const Form = () => {
   ) => {
     setForm((prev: any) => {
       let updatedFields = prev.sections;
-      prev[index] = {
+      updatedFields[index] = {
         index,
         section: sectionData,
         description,
@@ -92,6 +92,8 @@ export const Form = () => {
 
   const saveForm = async () => {
     const res = await forms.saveForm(form);
+    console.log(form);
+    
     if (res?.statusCode) {
       toast({
         title: "API Error",

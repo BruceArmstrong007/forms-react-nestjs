@@ -24,7 +24,12 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 
-export const Sections = ({ section, updateSection, deleteSection }: any) => {
+export const Sections = ({
+  index,
+  section,
+  updateSection,
+  deleteSection,
+}: any) => {
   const [sectionData, setSectionData] = useState<SectionData>(section?.section);
   const [description, setDescription] = useState<DescriptionData>(
     section?.description
@@ -32,8 +37,8 @@ export const Sections = ({ section, updateSection, deleteSection }: any) => {
   const [fields, setFields] = useState<FieldsData[]>(section?.fields);
 
   useEffect(() => {
-    updateSection(sectionData, description, fields);
-  }, [sectionData, description, fields]);
+    updateSection(index, sectionData, description, fields);
+  }, [index, sectionData, description, fields]);
 
   const updateData = (index: number, type: string, data: any[]) => {
     setFields((prev: any) => {

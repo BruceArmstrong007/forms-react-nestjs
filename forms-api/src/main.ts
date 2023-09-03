@@ -9,7 +9,7 @@ async function bootstrap() {
   const configService = await app.get(ConfigService);
 
   app.enableCors({
-    origin: configService.get('CLIENT_URI'),
+    origin: configService.get('CLIENT_URL'),
   });
   app.use(bodyParser.json());
   app.useGlobalPipes(

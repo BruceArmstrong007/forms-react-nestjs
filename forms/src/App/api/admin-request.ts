@@ -1,3 +1,4 @@
+import { requestAdditionalOptions } from "../../shared/utils/variables";
 import { SERVER_URL } from "../environment";
 import { authState } from "../state/auth-state";
 
@@ -7,7 +8,9 @@ export async function profile() {
   const auth: any = authState.getState();
   const token = auth.token.accessToken;
   const endPoint = "/user/profile";
-  const requestOptions = {
+  const requestOptions: any = {
+    ...requestAdditionalOptions,
+
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -29,12 +32,14 @@ export async function update(values: any) {
   const auth: any = authState.getState();
   const token = auth.token.accessToken;
   const endPoint = "/user/update";
-  const requestOptions = {
+  const requestOptions: any = {
+    ...requestAdditionalOptions,
+
     method: "PUT",
     headers: {
-      "Authorization": "Bearer " + token,
+      Authorization: "Bearer " + token,
     },
-    body: values
+    body: values,
   };
   let result = null;
   try {
@@ -51,12 +56,14 @@ export async function uploadProfile(values: any) {
   const auth: any = authState.getState();
   const token = auth.token.accessToken;
   const endPoint = "/user/upload-profile";
-  const requestOptions = {
+  const requestOptions: any = {
+    ...requestAdditionalOptions,
+
     method: "PUT",
     headers: {
-      "Authorization": "Bearer " + token,
+      Authorization: "Bearer " + token,
     },
-    body: values
+    body: values,
   };
   let result = null;
   try {

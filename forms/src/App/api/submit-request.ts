@@ -1,10 +1,13 @@
+import { requestAdditionalOptions } from "../../shared/utils/variables";
 import { SERVER_URL } from "../environment";
 
 const serverURL = SERVER_URL ? SERVER_URL : "";
 
 export async function getForms(formID: string) {
   const endPoint = "/submits/get-form/" + formID;
-  const requestOptions = {
+  const requestOptions: any = {
+    ...requestAdditionalOptions,
+
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -23,7 +26,9 @@ export async function getForms(formID: string) {
 
 export async function saveForm(values: any) {
   const endPoint = "/submits/submit-form";
-  const requestOptions = {
+  const requestOptions: any = {
+    ...requestAdditionalOptions,
+
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -43,7 +48,9 @@ export async function saveForm(values: any) {
 
 export async function uploadFile(values: any) {
   const endPoint = "/submits/upload-file";
-  const requestOptions = {
+  const requestOptions: any = {
+    ...requestAdditionalOptions,
+
     method: "PUT",
     body: values,
   };
@@ -60,7 +67,9 @@ export async function uploadFile(values: any) {
 
 export async function deleteFile(fileName: string) {
   const endPoint = "/submits/delete-file/" + fileName;
-  const requestOptions = {
+  const requestOptions: any = {
+    ...requestAdditionalOptions,
+
     method: "DELETE",
   };
   let result = null;

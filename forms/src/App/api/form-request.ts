@@ -1,4 +1,5 @@
 import { UploadOptions } from "../../shared/utils/enums";
+import { requestAdditionalOptions } from "../../shared/utils/variables";
 import { SERVER_URL } from "../environment";
 import { authState } from "../state/auth-state";
 
@@ -8,7 +9,9 @@ export async function uploadFile(values: any, type: UploadOptions) {
   const auth: any = authState.getState();
   const token = auth.token.accessToken;
   const endPoint = "/forms/" + type;
-  const requestOptions = {
+  const requestOptions: any = {
+    ...requestAdditionalOptions,
+
     method: "PUT",
     headers: {
       Authorization: "Bearer " + token,
@@ -30,7 +33,9 @@ export async function deleteFile(fileName: string) {
   const auth: any = authState.getState();
   const token = auth.token.accessToken;
   const endPoint = "/forms/delete-file/" + fileName;
-  const requestOptions = {
+  const requestOptions: any = {
+    ...requestAdditionalOptions,
+
     method: "DELETE",
     headers: {
       Authorization: "Bearer " + token,
@@ -51,7 +56,9 @@ export async function getForms() {
   const auth: any = authState.getState();
   const token = auth.token.accessToken;
   const endPoint = "/forms/list";
-  const requestOptions = {
+  const requestOptions: any = {
+    ...requestAdditionalOptions,
+
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -73,11 +80,13 @@ export async function saveForm(values: any) {
   const auth: any = authState.getState();
   const token = auth.token.accessToken;
   const endPoint = "/forms/save";
-  const requestOptions = {
+  const requestOptions: any = {
+    ...requestAdditionalOptions,
+
     method: "POST",
     headers: {
-      "Authorization": "Bearer " + token,
-      "Content-Type": "application/json"
+      Authorization: "Bearer " + token,
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(values),
   };
@@ -92,12 +101,13 @@ export async function saveForm(values: any) {
   return result;
 }
 
-
 export async function deleteForm(formID: string) {
   const auth: any = authState.getState();
   const token = auth.token.accessToken;
   const endPoint = "/forms/delete/" + formID;
-  const requestOptions = {
+  const requestOptions: any = {
+    ...requestAdditionalOptions,
+
     method: "DELETE",
     headers: {
       Authorization: "Bearer " + token,
@@ -114,12 +124,13 @@ export async function deleteForm(formID: string) {
   return result;
 }
 
-
 export async function getResponses() {
   const auth: any = authState.getState();
   const token = auth.token.accessToken;
   const endPoint = "/submits/responses";
-  const requestOptions = {
+  const requestOptions: any = {
+    ...requestAdditionalOptions,
+
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -137,12 +148,13 @@ export async function getResponses() {
   return result;
 }
 
-
 export async function deleteResponse(responseID: string) {
   const auth: any = authState.getState();
   const token = auth.token.accessToken;
   const endPoint = "/submits/delete-response/" + responseID;
-  const requestOptions = {
+  const requestOptions: any = {
+    ...requestAdditionalOptions,
+
     method: "DELETE",
     headers: {
       Authorization: "Bearer " + token,
