@@ -6,7 +6,7 @@ If you get to signup & signin (only username, password) you can create and share
 u can fill the shared form even if you dont want to signup
 
 # Note
- React (functional) - My very first time </br>
+ First time buiding spa with react, zustand and chakra ui </br>
  In nestjs server, .env should be created with valid variables, (check app.module.ts to know about those variables)
 
 # Prerequisites
