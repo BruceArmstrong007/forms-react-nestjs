@@ -91,5 +91,5 @@ export const router = createBrowserRouter([
         element: <Navigate to="landing-page" />,
       },
     ],
-  },
+  }
 ]);

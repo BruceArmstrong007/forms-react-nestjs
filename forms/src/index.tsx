@@ -4,7 +4,7 @@ import * as ReactDOM from "react-dom/client"
 import reportWebVitals from "./reportWebVitals"
 import * as serviceWorker from "./serviceWorker"
 import { RouterProvider } from "react-router-dom"
-import { router } from "./app/routes/routes"
+import { router } from "./app/routes/AppRoutes"
 
 
 
