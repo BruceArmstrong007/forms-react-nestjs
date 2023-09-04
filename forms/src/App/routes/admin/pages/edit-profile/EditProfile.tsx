@@ -32,7 +32,7 @@ export const EditProfile = () => {
   const toast = useToast();
   const inputRef: any = useRef();
   const fileRef: any = useRef();
-  const addFile = (file: any) => {
+  const addFile = async (file: any) => {
     setFile(file);
     const result = new FormData();
     result.append("profile", file);
@@ -45,7 +45,7 @@ export const EditProfile = () => {
         });
         return;
       }
-      admin.getProfile();
+      await admin.getProfile();
       toast({
         title: "Success!",
         description: "Profile Picture successfully uploaded.",
