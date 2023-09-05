@@ -26,7 +26,7 @@ const ProfileSchema = Yup.object().shape({
   profile: Yup.string(),
 });
 
-export const EditProfile = async () => {
+export const EditProfile = () => {
   const [file, setFile] = useState<any>({ name: "" });
   const admin: any = adminState((state: any) => state);
   const toast = useToast();

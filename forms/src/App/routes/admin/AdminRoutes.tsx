@@ -1,6 +1,5 @@
 import { Navigate } from "react-router-dom";
 import { formState } from "../../state/form-state";
-import { delay } from "../../../shared/utils/functions";
 
 export const AdminRoutes = [
   {
