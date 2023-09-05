@@ -38,8 +38,9 @@ export async function update(values: any) {
     method: "PUT",
     headers: {
       Authorization: "Bearer " + token,
+      "Content-Type": "application/json",
     },
-    body: values,
+    body: JSON.stringify(values),
   };
   let result = null;
   try {

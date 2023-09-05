@@ -10,7 +10,7 @@ export const App = () => {
       if (auth.token.accessToken) {
         auth.refresh();
       }
-    }, 4000);
+    }, 300000); // 5 min
     return () => {
       clearInterval(refreshToken);
     };
