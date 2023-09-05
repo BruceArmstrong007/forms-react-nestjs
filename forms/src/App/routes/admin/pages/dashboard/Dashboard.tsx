@@ -14,6 +14,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import Icon from "@chakra-ui/icon";
 import { MdAdd, MdDelete } from "react-icons/md";
+import { VscOpenPreview } from "react-icons/vsc";
 import { Tooltip } from "@chakra-ui/react";
 
 import { FaWpforms } from "react-icons/fa";
@@ -116,9 +117,13 @@ export const Dashboard = () => {
     await form.getForms();
   };
 
-  const viewResponses = async (formID: string) => {
+  const viewResponses = (formID: string) => {
     navigate("/admin/responses/" + formID);
   };
+
+  const preview = (formID: string) => {
+    navigate("/admin/preview/" + formID);
+  }; 
 
   const renderForm = form.forms.map((data: any) => {
     return (
@@ -134,6 +139,22 @@ export const Dashboard = () => {
           </CardHeader>
           <CardBody onClick={() => openForm(data?._id)}></CardBody>
           <CardFooter>
+            
+          <Box w="full" display="flex" justifyContent="space-between" alignItems="center">
+            <ButtonGroup>
+            <Tooltip label="Preview Form" placement="bottom">
+              <IconButton
+                size="xs"
+                onClick={() => preview(data?._id)}
+                aria-label="Preview Form"
+                variant="outline"
+                colorScheme="white"
+                _hover={{ backgroundColor: "green", border: "transparent" }}
+                isRound={true}
+              >
+                <Icon as={VscOpenPreview}></Icon>
+              </IconButton>
+            </Tooltip>
             <Tooltip label="View Responses" placement="bottom">
               <IconButton
                 size="xs"
@@ -147,7 +168,7 @@ export const Dashboard = () => {
                 <Icon as={FaWpforms}></Icon>
               </IconButton>
             </Tooltip>
-            <Box w="full" display="flex" justifyContent="end" alignItems="end">
+            </ButtonGroup>
               <ButtonGroup>
                 <ShareButton id={data?._id} />
                 <Tooltip label="Delete Form" placement="bottom">

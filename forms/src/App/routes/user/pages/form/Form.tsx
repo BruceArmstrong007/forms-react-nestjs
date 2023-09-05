@@ -5,6 +5,7 @@ import { submitState } from "../../../../state/submit-state";
 import { useState } from "react";
 import { Options } from "../form/components/options/Options";
 import { Submitted } from "./components/submitted/Submitted";
+import { Navbar } from './components/navbar/Navbar';
 
 export const Form = () => {
   const forms = submitState((state: any) => state);
@@ -77,28 +78,31 @@ export const Form = () => {
   );
 
   return (
-    <Box
-      w="full"
-      display="flex"
-      padding="40px"
-      alignItems="center"
-      justifyContent="center"
-    >
-      <VStack color="white" w="70%" spacing={4}>
-        <Heading
-          w="full"
-          bg="teal.500"
-          rounded="md"
-          padding="20px"
-          as="h2"
-          size="lg"
-          textAlign="center"
-        >
-          {forms?.form?.name}
-        </Heading>
-        {forms?.submit ? <Submitted /> : renderSections}
-        {!forms?.submit && <Options saveForm={saveForm}></Options>}
-      </VStack>
+    <Box>
+      <Navbar/>
+      <Box
+        w="full"
+        display="flex"
+        padding="40px"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <VStack color="white" w="70%" spacing={4}>
+          <Heading
+            w="full"
+            bg="teal.500"
+            rounded="md"
+            padding="20px"
+            as="h2"
+            size="lg"
+            textAlign="center"
+          >
+            {forms?.form?.name}
+          </Heading>
+          {forms?.submit ? <Submitted /> : renderSections}
+          {!forms?.submit && <Options saveForm={saveForm}></Options>}
+        </VStack>
+      </Box>
     </Box>
   );
 };

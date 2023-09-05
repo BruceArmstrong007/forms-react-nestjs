@@ -24,6 +24,13 @@ export const AdminRoutes = [
     },
   },
   {
+    path: "preview/:id",
+    async lazy() {
+      let { FormPreview } = await import("./pages/form-preview/FormPreview");
+      return { Component: FormPreview };
+    },
+  },
+  {
     path: "responses/:id",
     async lazy() {
       let { Response } = await import("./pages/response/Response");
