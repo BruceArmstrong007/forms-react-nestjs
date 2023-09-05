@@ -7,7 +7,7 @@ export const App = () => {
   const auth = authState((state: any) => state);
   useEffect(() => {
     let refreshToken = setInterval(() => {
-      if (auth.token.refreshToken) {
+      if (auth.token.accessToken) {
         auth.refresh();
       }
     }, 4000);
