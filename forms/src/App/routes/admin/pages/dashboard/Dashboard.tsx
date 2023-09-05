@@ -174,6 +174,7 @@ export const Dashboard = () => {
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
+                _hover={{ backgroundColor: "rgba(0,0,0,.5)  "}}
               >
                 <Icon as={MdAdd} fontSize={"9xl"} />
               </CardBody>
