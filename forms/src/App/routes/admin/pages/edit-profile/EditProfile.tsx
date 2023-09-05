@@ -26,7 +26,7 @@ const ProfileSchema = Yup.object().shape({
   profile: Yup.string(),
 });
 
-export const EditProfile = () => {
+export const EditProfile = async () => {
   const [file, setFile] = useState<any>({ name: "" });
   const admin: any = adminState((state: any) => state);
   const toast = useToast();
@@ -36,21 +36,20 @@ export const EditProfile = () => {
     setFile(file);
     const result = new FormData();
     result.append("profile", file);
-    admin.uploadProfile(result).then((res: any) => {
-      if (res?.statusCode) {
-        toast({
-          title: "API Error",
-          description: res?.message,
-          status: "error",
-        });
-        return;
-      }
-      await admin.getProfile();
+    const res = await admin.uploadProfile(result);
+    if (res?.statusCode) {
       toast({
-        title: "Success!",
-        description: "Profile Picture successfully uploaded.",
-        status: "success",
+        title: "API Error",
+        description: res?.message,
+        status: "error",
       });
+      return;
+    }
+    admin.getProfile();
+    toast({
+      title: "Success!",
+      description: "Profile Picture successfully uploaded.",
+      status: "success",
     });
   };
   const removeFile = () => {
