@@ -23,11 +23,12 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { MdExitToApp } from "react-icons/md";
 import { adminState } from "../../../state/admin-state";
 import { authState } from "../../../state/auth-state";
+import { useLocation } from "react-router-dom";
 
 export const Navbar = () => {
   const navigate = useNavigate();
   const admin = adminState((state: any) => state);
-  
+  const route = useLocation().pathname;
   const auth: any = authState((state: any) => state);
 
   const handleLogout = () => {
@@ -52,6 +53,11 @@ export const Navbar = () => {
             <Link to={"/admin/dashboard"}>
               <Logo h="30px" />
             </Link>
+          {route !== '/admin/dashboard' && (
+              <Link to={"/admin/dashboard"}>
+                <Text size="lg">Dashboard</Text>
+              </Link>
+            )}
           </HStack>
           <Flex display={{ base: "none", md: "flex" }} ml={10}></Flex>
         </Flex>

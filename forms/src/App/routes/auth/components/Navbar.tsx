@@ -10,7 +10,7 @@ import { ThemeSwitcher } from '../../../../shared/components/theme-switcher/Them
 import { Link, NavLink, useLocation } from 'react-router-dom'
 
 export const Navbar = () => {
-  const location = useLocation()
+  const location = useLocation().pathname;
   
   return (
     <Box>
@@ -37,10 +37,10 @@ export const Navbar = () => {
           direction={'row'}
           spacing={6}>
           <ThemeSwitcher></ThemeSwitcher>
-          {location.pathname != '/auth/login' && <Button as={NavLink} to="/auth/login" fontSize={'sm'} fontWeight={400} variant={'link'} >
+          {location !== '/auth/login' && <Button as={NavLink} to="/auth/login" fontSize={'sm'} fontWeight={400} variant={'link'} >
             Login
           </Button>}
-          {location.pathname != '/auth/register' && <Button
+          {location !== '/auth/register' && <Button
             as={NavLink} 
             to="/auth/register"
             display={{ base: 'inline-flex', md: 'inline-flex' }}
