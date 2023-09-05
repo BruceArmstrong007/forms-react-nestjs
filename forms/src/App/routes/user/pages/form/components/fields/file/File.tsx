@@ -48,7 +48,16 @@ export const File = ({ entries, handleAnswer, required }: any) => {
       const result = new FormData();
       result.append("file", files[i]);
       const res = await form.uploadFile(result);
-      if (res?.statusCode) {
+      if (!res) {
+        toast({
+          title: "Failed to connect",
+          description: "Couldn't connect to server.",
+          status: "error",
+        });
+        return;
+      }
+      const statusCode = res?.statusCode;
+      if (statusCode) {
         toast({
           title: "API Error",
           description: res?.message,

@@ -48,6 +48,8 @@ export const ShareButton = ({ id }: any) => {
     >
       <PopoverTrigger>
         <IconButton
+          onMouseEnter={onOpen}
+          onMouseLeave={onClose}
           size="xs"
           aria-label="Share Form"
           variant="outline"
@@ -83,11 +85,7 @@ export const ShareButton = ({ id }: any) => {
               <Button variant="outline" size="xs" onClick={onClose}>
                 Cancel
               </Button>
-              <Button
-                size="xs"
-                onClick={() => shareForm()}
-                colorScheme="teal"
-              >
+              <Button size="xs" onClick={() => shareForm()} colorScheme="teal">
                 Share
               </Button>
             </ButtonGroup>

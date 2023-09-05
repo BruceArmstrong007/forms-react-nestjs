@@ -62,11 +62,20 @@ export const Dashboard = () => {
   };
 
   const addForm = async () => {
-    const response = await form.saveForm(initialFormData);
-    if (response.statusCode) {
+    const res = await form.saveForm(initialFormData);
+    if (!res) {
+      toast({
+        title: "Failed to connect",
+        description: "Couldn't connect to server.",
+        status: "error",
+      });
+      return;
+    }
+    const statusCode = res?.statusCode;
+    if (statusCode) {
       toast({
         title: "API Error",
-        description: response?.message,
+        description: res?.message,
         status: "error",
       });
       return;
@@ -77,15 +86,24 @@ export const Dashboard = () => {
       status: "success",
     });
     await form.getForms();
-    navigate("/admin/forms/" + response?.formID);
+    navigate("/admin/forms/" + res?.formID);
   };
 
   const deleteForm = async (formID: string) => {
-    const response = await form.deleteForm(formID);
-    if (response.statusCode) {
+    const res = await form.deleteForm(formID);
+    if (!res) {
+      toast({
+        title: "Failed to connect",
+        description: "Couldn't connect to server.",
+        status: "error",
+      });
+      return;
+    }
+    const statusCode = res?.statusCode;
+    if (statusCode) {
       toast({
         title: "API Error",
-        description: response?.message,
+        description: res?.message,
         status: "error",
       });
       return;
@@ -97,8 +115,6 @@ export const Dashboard = () => {
     });
     await form.getForms();
   };
-
-
 
   const viewResponses = async (formID: string) => {
     navigate("/admin/responses/" + formID);
@@ -133,7 +149,7 @@ export const Dashboard = () => {
             </Tooltip>
             <Box w="full" display="flex" justifyContent="end" alignItems="end">
               <ButtonGroup>
-              <ShareButton id={data?._id} />
+                <ShareButton id={data?._id} />
                 <Tooltip label="Delete Form" placement="bottom">
                   <IconButton
                     size="xs"
@@ -174,7 +190,7 @@ export const Dashboard = () => {
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
-                _hover={{ backgroundColor: "rgba(0,0,0,.5)  "}}
+                _hover={{ backgroundColor: "rgba(0,0,0,.5)  " }}
               >
                 <Icon as={MdAdd} fontSize={"9xl"} />
               </CardBody>

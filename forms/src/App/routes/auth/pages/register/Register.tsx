@@ -30,7 +30,16 @@ export const Register = () => {
   const toast = useToast();
   const register = authState((state: any) => state.register);
   const handleResponse = (res: any) => {
-    if (res?.statusCode) {
+    if (!res) {
+      toast({
+        title: "Failed to connect",
+        description: "Couldn't connect to server.",
+        status: "error",
+      });
+      return;
+    }
+    const statusCode = res?.statusCode;
+    if (statusCode) {
       toast({
         title: "API Error",
         description: res?.message,

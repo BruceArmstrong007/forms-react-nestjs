@@ -53,7 +53,7 @@ export const Navbar = () => {
             <Link to={"/admin/dashboard"}>
               <Logo h="30px" />
             </Link>
-          {route !== '/admin/dashboard' && (
+            {route !== "/admin/dashboard" && (
               <Link to={"/admin/dashboard"}>
                 <Text size="lg">Dashboard</Text>
               </Link>

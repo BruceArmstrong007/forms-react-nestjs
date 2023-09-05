@@ -39,7 +39,16 @@ export const Form = () => {
     };
 
     const res = await forms.saveForm(form);
-    if (res?.statusCode) {
+    if (!res) {
+      toast({
+        title: "Failed to connect",
+        description: "Couldn't connect to server.",
+        status: "error",
+      });
+      return;
+    }
+    const statusCode = res?.statusCode;
+    if (statusCode) {
       toast({
         title: "API Error",
         description: res?.message,

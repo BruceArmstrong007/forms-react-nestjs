@@ -37,7 +37,16 @@ export const EditProfile = () => {
     const result = new FormData();
     result.append("profile", file);
     const res = await admin.uploadProfile(result);
-    if (res?.statusCode) {
+    if (!res) {
+      toast({
+        title: "Failed to connect",
+        description: "Couldn't connect to server.",
+        status: "error",
+      });
+      return;
+    }
+    const statusCode = res?.statusCode;
+    if (statusCode) {
       toast({
         title: "API Error",
         description: res?.message,
@@ -60,7 +69,16 @@ export const EditProfile = () => {
     admin.update(values).then(handleResponse);
   };
   const handleResponse = (res: any) => {
-    if (res?.statusCode) {
+    if (!res) {
+      toast({
+        title: "Failed to connect",
+        description: "Couldn't connect to server.",
+        status: "error",
+      });
+      return;
+    }
+    const statusCode = res?.statusCode;
+    if (statusCode) {
       toast({
         title: "API Error",
         description: res?.message,

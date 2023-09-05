@@ -25,7 +25,16 @@ export const Controls = ({ urlChange, isControls, url }: any) => {
     const result = new FormData();
     result.append("file", file);
     forms.uploadFile(result, UploadOptions.Video).then((res: any) => {
-      if (res?.statusCode) {
+      if (!res) {
+        toast({
+          title: "Failed to connect",
+          description: "Couldn't connect to server.",
+          status: "error",
+        });
+        return;
+      }
+      const statusCode = res?.statusCode;
+      if (statusCode) {
         toast({
           title: "API Error",
           description: res?.message,
@@ -42,11 +51,20 @@ export const Controls = ({ urlChange, isControls, url }: any) => {
     });
   };
   const removeFile = async () => {
-    const response = await forms.deleteFile(file?.name);
-    if (response?.statusCode) {
+    const res = await forms.deleteFile(file?.name);
+    if (!res) {
+      toast({
+        title: "Failed to connect",
+        description: "Couldn't connect to server.",
+        status: "error",
+      });
+      return;
+    }
+    const statusCode = res?.statusCode;
+    if (statusCode) {
       toast({
         title: "API Error",
-        description: response?.message,
+        description: res?.message,
         status: "error",
       });
       return;
